@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Continue write</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+
+</head>
+<body>
+<h2>글 쓰기</h2>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js">
+</script>
+<div id="editor"></div>
+
+<form id="writeForm" method="post" th:object="${tempPost}" onsubmit="handlerEditor()">
+    <div class="title">
+        <label>
+            제목:
+            <input type="text" id="title" th:field="*{title}" name="title" required>
+        </label>
+    </div>
+    <div class="writer">
+        <label>
+            <div 작성자 : th:text="${session.writer}"></div>
+            <input type="text" id="writer" name="writer" th:field="*{writer}" hidden>
+        </label>
+    </div>
+    <div class="contents">
+        <textarea id="contents" name="contents" th:field="*{contents}" hidden></textarea>
+    </div>
+    <button class="summit_btn" type="submit" th:formaction="@{'/postComplete/'+${tempPost.id}}">포스팅하기</button>
+    <button class="temp_summit_btn" type="submit" th:formaction="@{'/continueWrite/'+${tempPost.id}}">임시저장</button>
+</form>
+</body>
+<style>
+    .title>label>input{
+        width: 300px;
+        height: 30px;
+        margin: 10px;
+    }
+    .contents>label>input{
+        height: 300px;
+        width: 50%;
+        margin: 10px;
+    }
+    .summit_btn{
+        position: relative;
+        left: 49%;
+    }
+</style>
+<script>
+    const Editor = toastui.Editor;
+    const editor = new Editor({
+        el: document.querySelector('#editor'),
+        height: '600px',
+        initialEditType: 'markdown',
+        previewStyle: 'vertical'
+    });
+
+    (function (){
+
+        // const title = document.querySelector("title");
+        // const writer = document.querySelector("writer");
+        const input =  document.getElementById('contents');
+
+        editor.setMarkdown(input.value);
+    })()
+
+    async function handlerEditor(e) {
+
+        const editorBody = editor.getMarkdown();
+        const input =  document.getElementById('contents');
+        input.value = editorBody;
+    }
+
+
+</script>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
+</head>
+<body>
+
+
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.js"></script>
+<div class="container">
+    <h1 th:text="${post.title}"></h1>
+    <div id="viewer"></div>
+<!--    <h6 th:text="${post.writer}"></h6>-->
+<!--    <textarea th:text="${post.contents}" readonly></textarea>-->
+    <p th:text="${post.views}"></p>
+    <div th:if="${user}!=null">
+        <div th:if="${user.name} == ${post.writer}">
+            <a th:href="@{'/delete_post/'+${post.id}}">삭제</a>
+            <a th:href="@{'/modify_post/'+${post.id}}">수정</a>
+        </div>
+    </div>
+</div>
+</body>
+<style>
+    .container{
+        border: solid 1px;
+        margin: 0px 100px 100px 100px;
+
+    }
+</style>
+<script th:inline="javascript">
+
+    let contents = [[${post.contents}]];
+    const Viewer = toastui.Editor;
+
+    const viewer = new Viewer({
+        el: document.querySelector('#viewer'),
+        height: '600px',
+        initialValue: contents
+    });
+</script>
+</html>
