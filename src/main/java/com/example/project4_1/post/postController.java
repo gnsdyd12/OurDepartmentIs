@@ -8,9 +8,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.List;
 import java.util.Optional;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class postController {
 
@@ -77,6 +78,13 @@ public class postController {
         postService.modify(postModifyDto);
         return "redirect:/";
         //return "redirect:/modify_post/"+ postModifyDto.getId();
+    }
+
+    /* front에 postList 데이터 전송 */
+    @PostMapping("/api/postList")
+    public List<PostDto.PostListDto> postList() {
+        List<PostDto.PostListDto> postList = postService.findByAll();
+        return postList;
     }
 
 }
