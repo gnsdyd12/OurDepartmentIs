@@ -13,9 +13,10 @@ import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import AdbIcon from "@mui/icons-material/Adb";
 import LoginIcon from "@mui/icons-material/Login";
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 
 const pages = ["생활", "학습"];
-const settings = ["마이페이지", "글쓰기", "로그아웃"];
+const settings = ["내 정보", "임시 저장", "좋아요", "글쓰기", "로그아웃"];
 
 const Header = () => {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -116,6 +117,7 @@ const Header = () => {
               size="large"
             >
               <LoginIcon />
+              <ArrowDropDownIcon />
             </IconButton>
           )}
         </Toolbar>
