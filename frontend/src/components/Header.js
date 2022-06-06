@@ -1,45 +1,82 @@
-import React, { useState } from "react";
-import AppBar from "@mui/material/AppBar";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
-import Menu from "@mui/material/Menu";
-import MenuIcon from "@mui/icons-material/Menu";
-import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
+import React, { useContext, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { LoginInfoContext } from "../App";
+import axios from "axios";
+import {
+  AppBar,
+  Box,
+  Toolbar,
+  IconButton,
+  Typography,
+  Menu,
+  Container,
+  Button,
+  Tooltip,
+  MenuItem,
+} from "@mui/material";
 import AdbIcon from "@mui/icons-material/Adb";
 import LoginIcon from "@mui/icons-material/Login";
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import LogoutIcon from "@mui/icons-material/Logout";
+import { API_BASE_URL } from "../URL";
+import { basicColor } from "../color";
 
 const pages = ["생활", "학습"];
-const settings = ["내 정보", "임시 저장", "좋아요", "글쓰기", "로그아웃"];
 
 const Header = () => {
+  /* NavMenu */
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(null);
-  const [isLogin, setIsLogin] = useState(false);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
+  /* UserMenu */
+  const [anchorElUser, setAnchorElUser] = useState(null);
+
+  const handleOpenUserMenu = (event) => {
+    setAnchorElUser(event.currentTarget);
+  };
+
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
 
+  // loginMenu
+  const loginMenu = [
+    {
+      title: "내 정보",
+      onClick: () => console.log("내 정보 클릭"),
+    },
+    {
+      title: "글쓰기",
+      onClick: () => (window.location.href = API_BASE_URL + "/write_post"),
+    },
+    {
+      title: "임시 저장",
+      onClick: () => navigate("/temporary_save"),
+      handleCloseUserMenu,
+    },
+    {
+      title: "좋아요",
+      onClick: () => console.log("좋아요 클릭"),
+    },
+    {
+      title: <LogoutIcon />,
+      onClick: () => (window.location.href = API_BASE_URL + "/logout"),
+    },
+  ];
+
+  // 로그인 정보
+  const loginInfo = useContext(LoginInfoContext);
+
+  const navigate = useNavigate();
+
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{ backgroundColor: basicColor }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* 아이콘 */}
@@ -78,12 +115,19 @@ const Header = () => {
           </Box>
 
           {/* 로그인 / 계정 메뉴 버튼 */}
-          {isLogin ? (
+          {loginInfo ? (
             <Box sx={{ flexGrow: 0 }}>
               <Tooltip title="메뉴 열어보기">
-                <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
-                </IconButton>
+                <Button onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                  <img
+                    src={loginInfo.picture}
+                    style={{
+                      width: "45px",
+                      height: "45px",
+                      borderRadius: "22.5px",
+                    }}
+                  />
+                </Button>
               </Tooltip>
 
               <Menu
@@ -102,25 +146,20 @@ const Header = () => {
                 open={Boolean(anchorElUser)}
                 onClose={handleCloseUserMenu}
               >
-                {settings.map((setting) => (
-                  <MenuItem key={setting} onClick={handleCloseUserMenu}>
-                    <Typography textAlign="center">{setting}</Typography>
+                {loginMenu.map((menuItem) => (
+                  <MenuItem key={menuItem.title} onClick={menuItem.onClick}>
+                    <Typography textAlign="center">{menuItem.title}</Typography>
                   </MenuItem>
                 ))}
               </Menu>
             </Box>
           ) : (
             <>
-              {/* <a href="/oauth2/authorization/google"> */}
-              <IconButton
-                onClick={() => {
-                  setIsLogin(true);
-                }}
-                size="large"
-              >
-                <LoginIcon />
-              </IconButton>
-              {/* </a> */}
+              <a href={API_BASE_URL + "/oauth2/authorization/google"}>
+                <IconButton size="large">
+                  <LoginIcon />
+                </IconButton>
+              </a>
             </>
           )}
         </Toolbar>
@@ -128,4 +167,5 @@ const Header = () => {
     </AppBar>
   );
 };
+
 export default Header;
