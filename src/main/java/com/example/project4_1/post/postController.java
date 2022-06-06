@@ -80,11 +80,18 @@ public class postController {
         //return "redirect:/modify_post/"+ postModifyDto.getId();
     }
 
-    /* front에 postList 데이터 전송 */
-    @PostMapping("/api/postList")
+    /* front에 PostListDto 데이터 전송 */
+    @GetMapping ("/api/postList")
     public List<PostDto.PostListDto> postList() {
         List<PostDto.PostListDto> postList = postService.findByAll();
         return postList;
+    }
+
+    /* front에 PostDetailDto 데이터 전송 */
+    @PostMapping("/api/view_post/{id}")
+    public PostDto.PostDetailDto postDetail(@PathVariable Long id) {
+        Optional<PostDto.PostDetailDto> postDetail = postService.findById(id);
+        return postDetail.get();
     }
 
 }

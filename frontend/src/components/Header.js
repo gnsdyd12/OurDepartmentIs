@@ -110,15 +110,18 @@ const Header = () => {
               </Menu>
             </Box>
           ) : (
-            <IconButton
-              onClick={() => {
-                setIsLogin(true);
-              }}
-              size="large"
-            >
-              <LoginIcon />
-              <ArrowDropDownIcon />
-            </IconButton>
+            <>
+              {/* <a href="/oauth2/authorization/google"> */}
+              <IconButton
+                onClick={() => {
+                  setIsLogin(true);
+                }}
+                size="large"
+              >
+                <LoginIcon />
+              </IconButton>
+              {/* </a> */}
+            </>
           )}
         </Toolbar>
       </Container>

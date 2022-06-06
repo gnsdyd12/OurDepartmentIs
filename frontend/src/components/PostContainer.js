@@ -3,21 +3,20 @@ import axios from "axios";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Post from "./Post";
-import Box from "@mui/material/Box";
 
 const PostContainer = () => {
   const [postList, setPostList] = useState([]);
-  // int: id / string: title, contents, writer
+  // post: id(int), title(string), contents(string), writer(string)
 
   useEffect(() => {
-    axios.post("/api/postList").then((response) => {
-      if (response.data) {
+    axios
+      .get("/api/postList")
+      .then((response) => {
         setPostList(response.data);
-        // console.log(response.data);
-      } else {
-        alert("failed");
-      }
-    });
+      })
+      .catch((error) => {
+        alert(error);
+      });
   }, []);
 
   return (
