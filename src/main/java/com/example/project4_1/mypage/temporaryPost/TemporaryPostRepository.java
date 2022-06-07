@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TemporaryPostRepository extends JpaRepository<TemporaryPost,Long> {
+public interface TemporaryPostRepository extends JpaRepository<TemporaryPost, Long> {
+
     Optional<List<TemporaryPostDto.TemporaryPostListDto>> findByWriter(String writer);
+
 }

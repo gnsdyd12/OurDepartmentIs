@@ -11,16 +11,20 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @ToString
 public class Member {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) //id 자동증가
+    @GeneratedValue(strategy = GenerationType.AUTO) // id 자동 증가
     @Column
     private Long id;
+
     @Column
     @NotNull
     private String memberId;
+
     @Column
     @NotNull
     private String password;
+
     @Column
     private Integer grade;
 
@@ -30,4 +34,5 @@ public class Member {
         this.password = password;
         this.grade = grade;
     }
+
 }

@@ -1,10 +1,5 @@
+/* mui/material */
 import { Typography, Link, Box } from "@mui/material";
-
-/**
- *@author Suin-Jeong, suin8@jbnu.ac.kr
- *@date 2022-04-13
- *@description Footer의 최하단 저작권 표기
- */
 
 function Copyright() {
   return (

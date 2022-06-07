@@ -1,17 +1,21 @@
-import React, { useEffect, useState, useContext } from "react";
-import { PostListContext } from "../App";
+import React, { useEffect, useState } from "react";
+
+/* axios */
 import axios from "axios";
+
+/* mui/material */
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+
+/* components */
 import Post from "./Post";
-import { Button } from "@mui/material";
 
 const PostContainer = ({ postState }) => {
-  // 게시물 리스트 정보
+  // 게시물 리스트 관리 객체
   const [postList, setPostList] = useState([]);
-  // post: id(int), title(string), contents(string), writer(string)
+  // post = { id: int, title: string, contents: string, writer: string }
 
-  // 전체 게시물 데이터 요청, 수신
+  // 전체 게시물 데이터 요청 함수
   const getAllPostList = async () => {
     await axios
       .get("/api/postList")
@@ -23,7 +27,7 @@ const PostContainer = ({ postState }) => {
       });
   };
 
-  // 임시 저장 게시물 데이터 요청, 수신
+  // 임시 저장 게시물 데이터 요청 함수
   const getTemporaryPostList = async () => {
     await axios
       .get("/api/temporaryPostList")
@@ -35,6 +39,7 @@ const PostContainer = ({ postState }) => {
       });
   };
 
+  // Mount
   useEffect(() => {
     postState === "All" ? getAllPostList() : getTemporaryPostList();
   }, []);

@@ -1,29 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import { useNavigate } from "react-router-dom";
-import { Grid } from "@mui/material";
+
+/* mui/material */
+import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-import CardMedia from "@mui/material/CardMedia";
+// import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import IconButton from "@mui/material/IconButton";
+// import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
-import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-import ShareIcon from "@mui/icons-material/Share";
 import Box from "@mui/material/Box";
-import { Divider } from "@mui/material";
-import { API_BASE_URL } from "../URL";
+import Divider from "@mui/material/Divider";
 
-export default function Post({ post, postState }) {
-  // 미리보기 내용을 반환하는 함수. 내용이 일정 길이보다 길어지면 잘라서 반환한다.
+/* mui/icons-material */
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
+/* utils */
+import { API_BASE_URL } from "../utils/URL";
+
+const Post = ({ post, postState }) => {
+  const navigate = useNavigate();
+
+  // 미리보기 내용을 반환하는 함수. 내용이 일정 길이보다 길어지면 잘라서 반환
   const getPreview = (text, length) => {
     return text.length < length ? text : text.slice(0, length) + "...";
   };
 
-  const navigate = useNavigate();
-
   return (
     <Grid item key={post} xs={12} sm={12} md={6} lg={4} xl={3}>
+      {/* 게시물 - 미리보기 */}
       <Card
         sx={{ width: 345, height: 345, cursor: "pointer", boxShadow: "3" }}
         onClick={
@@ -34,7 +39,7 @@ export default function Post({ post, postState }) {
                   API_BASE_URL + `/continueWrite/${post.id}`)
         }
       >
-        {/* 제목, 작성일 */}
+        {/* 제목 */}
         <CardHeader title={getPreview(post.title, 15)} />
 
         {/* 본문 */}
@@ -60,4 +65,6 @@ export default function Post({ post, postState }) {
       </Card>
     </Grid>
   );
-}
+};
+
+export default Post;

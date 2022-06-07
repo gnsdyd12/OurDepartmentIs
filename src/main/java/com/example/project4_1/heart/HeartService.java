@@ -13,44 +13,44 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class HeartService {
+
     private final HeartRepository heartRepository;
     private final UserRepository userRepository;
     private final PostRepo postRepository;
-    private final HttpSession httpSession;
 
     public boolean heartSaveAndRemove(HeartDto.MyHeartDto myHeartDto) {
-
         Long uid = myHeartDto.getUid();
         Long pid = myHeartDto.getPid();
 
         User user = userRepository.findById(uid).get();
         Post post = postRepository.findById(pid).get();
 
-        //Heart heart = new Heart();
         Optional<Heart> heart = heartRepository.findByUidAndPid(user, post);
 
         Heart newHeart = new Heart();
-        newHeart.checkHeart(post,user);
+        newHeart.checkHeart(post, user);
 
         if (heart.isEmpty()) {
             heartRepository.save(newHeart);
             return true;
         } else {
-            Heart deleteHeart= heart.get();
+            Heart deleteHeart = heart.get();
             heartRepository.delete(deleteHeart);
             return false;
         }
     }
 
     public Heart findByPidAndUid(HeartDto.IsHeartDto isHeartDto) {
-
         Long uid = isHeartDto.getUid();
         Long pid = isHeartDto.getPid();
 
         User user = userRepository.findById(uid).get();
         Post post = postRepository.findById(pid).get();
+
         Optional<Heart> heart = heartRepository.findByUidAndPid(user, post);
+
         if (heart.isEmpty()) return null;
         else return heart.get();
     }
+
 }

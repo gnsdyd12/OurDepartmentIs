@@ -7,19 +7,25 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Post {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) //id 자동증가
+    @GeneratedValue(strategy = GenerationType.AUTO) //id 자동 증가
     private Long id;
+
     @Column
-    private String writer; //작성자
+    private String writer; // 작성자
+
     @Column
     @NotNull
-    private String title; //제목
+    private String title; // 제목
+
     @Column(columnDefinition = "LONGTEXT")
     @NotNull
-    private String contents; //본문
+    private String contents; // 본문
+
     @Column
-    private LocalDateTime create_time = LocalDateTime.now(); //생성시간
+    private LocalDateTime create_time = LocalDateTime.now(); // 생성 시간
+
     @Column
     private Long views = 0L; //조회수
 
@@ -34,6 +40,7 @@ public class Post {
         this.writer = postSaveDto.getWriter();
         this.views = 0L;
     }
+
     public void modify(PostDto.PostModifyDto postModifyDto) {
         this.id = postModifyDto.getId();
         this.title = postModifyDto.getTitle();
@@ -88,4 +95,5 @@ public class Post {
     public void setViews(Long views) {
         this.views = views;
     }
+
 }

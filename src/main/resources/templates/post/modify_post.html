@@ -4,7 +4,7 @@
 
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
 
 </head>
@@ -14,7 +14,8 @@
 </script>
 <div id="editor"></div>
 
-<form id="writeForm" th:action="@{'/modify_post/'+${post.id}}" method="post" th:object="${post}" onsubmit="handlerEditor()">
+<form id="writeForm" th:action="@{'/modify_post/'+${post.id}}" method="post" th:object="${post}"
+      onsubmit="handlerEditor()">
     <div class="title">
         <label>
             제목:
@@ -34,17 +35,19 @@
 </form>
 </body>
 <style>
-    .title>label>input{
+    .title > label > input {
         width: 300px;
         height: 30px;
         margin: 10px;
     }
-    .contents>label>input{
+
+    .contents > label > input {
         height: 300px;
         width: 50%;
         margin: 10px;
     }
-    .summit_btn{
+
+    .summit_btn {
         position: relative;
         left: 49%;
     }
@@ -58,11 +61,11 @@
         previewStyle: 'vertical'
     });
 
-    (function (){
+    (function () {
 
         // const title = document.querySelector("title");
         // const writer = document.querySelector("writer");
-        const input =  document.getElementById('contents');
+        const input = document.getElementById('contents');
 
         editor.setMarkdown(input.value);
     })()
@@ -70,7 +73,7 @@
     async function handlerEditor(e) {
 
         const editorBody = editor.getMarkdown();
-        const input =  document.getElementById('contents');
+        const input = document.getElementById('contents');
         input.value = editorBody;
     }
 

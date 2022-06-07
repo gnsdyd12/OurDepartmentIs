@@ -1,7 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
+/* useContext */
 import { LoginInfoContext } from "../App";
-import axios from "axios";
+
+/* mui/material */
 import {
   AppBar,
   Box,
@@ -14,27 +17,20 @@ import {
   Tooltip,
   MenuItem,
 } from "@mui/material";
+
+/* mui/icons-material */
 import AdbIcon from "@mui/icons-material/Adb";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
-import { API_BASE_URL } from "../URL";
-import { basicColor } from "../color";
 
-const pages = ["생활", "학습"];
+/* utils */
+import { API_BASE_URL } from "../utils/URL";
+import { basicColor } from "../utils/color";
 
 const Header = () => {
-  /* NavMenu */
-  const [anchorElNav, setAnchorElNav] = useState(null);
+  const navigate = useNavigate();
 
-  const handleOpenNavMenu = (event) => {
-    setAnchorElNav(event.currentTarget);
-  };
-
-  const handleCloseNavMenu = () => {
-    setAnchorElNav(null);
-  };
-
-  /* UserMenu */
+  /* 사용자 메뉴 */
   const [anchorElUser, setAnchorElUser] = useState(null);
 
   const handleOpenUserMenu = (event) => {
@@ -45,7 +41,7 @@ const Header = () => {
     setAnchorElUser(null);
   };
 
-  // loginMenu
+  // 로그인 메뉴
   const loginMenu = [
     {
       title: "내 정보",
@@ -57,8 +53,10 @@ const Header = () => {
     },
     {
       title: "임시 저장",
-      onClick: () => navigate("/temporary_save"),
-      handleCloseUserMenu,
+      onClick: () => {
+        navigate("/temporary_save");
+        handleCloseUserMenu();
+      },
     },
     {
       title: "좋아요",
@@ -73,45 +71,33 @@ const Header = () => {
   // 로그인 정보
   const loginInfo = useContext(LoginInfoContext);
 
-  const navigate = useNavigate();
-
   return (
     <AppBar position="static" sx={{ backgroundColor: basicColor }}>
       <Container maxWidth="xl">
-        <Toolbar disableGutters>
-          {/* 아이콘 */}
-          <AdbIcon sx={{ display: "flex" }} />
+        <Toolbar disableGutters sx={{ justifyContent: "space-between", px: 3 }}>
+          {/* 로고 */}
+          <Box sx={{ display: "flex" }}>
+            {/* 아이콘 */}
+            <AdbIcon />
 
-          {/* 로고 Text */}
-          <Typography
-            variant="h6"
-            noWrap
-            component="a"
-            href="/"
-            sx={{
-              mr: 2,
-              display: "flex",
-              fontFamily: "monospace",
-              fontWeight: 700,
-              letterSpacing: ".3rem",
-              color: "inherit",
-              textDecoration: "none",
-            }}
-          >
-            ODI
-          </Typography>
-
-          {/* 생활, 학습 Tab 버튼 */}
-          <Box sx={{ flexGrow: 1, display: "flex" }}>
-            {pages.map((page) => (
-              <Button
-                key={page}
-                onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: "white", display: "block" }}
-              >
-                {page}
-              </Button>
-            ))}
+            {/* Text */}
+            <Typography
+              variant="h6"
+              noWrap
+              component="a"
+              href="/"
+              sx={{
+                mr: 2,
+                display: "flex",
+                fontFamily: "monospace",
+                fontWeight: 700,
+                letterSpacing: ".3rem",
+                color: "inherit",
+                textDecoration: "none",
+              }}
+            >
+              ODI
+            </Typography>
           </Box>
 
           {/* 로그인 / 계정 메뉴 버튼 */}
@@ -156,7 +142,7 @@ const Header = () => {
           ) : (
             <>
               <a href={API_BASE_URL + "/oauth2/authorization/google"}>
-                <IconButton size="large">
+                <IconButton>
                   <LoginIcon />
                 </IconButton>
               </a>

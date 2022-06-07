@@ -11,17 +11,21 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 public class TemporaryPost {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) //id 자동증가
+    @GeneratedValue(strategy = GenerationType.AUTO) //id 자동 증가
     private Long id;
+
     @Column
-    private String writer; //작성자
+    private String writer; // 작성자
+
     @Column
     @NotNull
-    private String title; //제목
+    private String title; // 제목
+
     @Column(columnDefinition = "LONGTEXT")
     @NotNull
-    private String contents; //본문
+    private String contents; // 본문
 
     public TemporaryPost() {
 
@@ -33,17 +37,10 @@ public class TemporaryPost {
         contents = temporaryPostSaveDto.getContents();
     }
 
-    //    public TemporaryPost(TemporaryPostDto.TemporaryPostListDto temporaryPostListDto){
-//        id=temporaryPostListDto.getId();
-//        title=temporaryPostListDto.getTitle();
-//        writer= temporaryPostListDto.getWriter();
-//        contents= temporaryPostListDto.getContents();
-//    }
     public TemporaryPost(TemporaryPostDto.TemporaryPostModifyDto temporaryPostModifyDto) {
         title = temporaryPostModifyDto.getTitle();
         writer = temporaryPostModifyDto.getWriter();
         contents = temporaryPostModifyDto.getContents();
     }
-
 
 }

@@ -9,6 +9,5 @@ import java.util.Optional;
 
 @Repository
 public interface HeartRepository extends JpaRepository<Heart, Long> {
-
     Optional<Heart> findByUidAndPid(User uid, Post pid);
 }

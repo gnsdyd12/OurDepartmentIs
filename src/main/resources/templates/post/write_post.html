@@ -1,17 +1,14 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
 <head>
-
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-
 </head>
 <body>
 <h2>글 쓰기</h2>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js">
-</script>
+<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 <div id="editor"></div>
 
 <form id="writeForm" method="POST" onsubmit="handlerEditor()">
@@ -35,21 +32,24 @@
 </form>
 </body>
 <style>
-    .title>label>input{
+    .title > label > input {
         width: 300px;
         height: 30px;
         margin: 10px;
     }
-    .contents>label>input{
+
+    .contents > label > input {
         height: 300px;
         width: 50%;
         margin: 10px;
     }
-    .summit_btn{
+
+    .summit_btn {
         position: relative;
         left: 49%;
     }
-    .temp_summit_btn{
+
+    .temp_summit_btn {
         position: relative;
         left: 49%;
     }
@@ -67,10 +67,11 @@
         initialEditType: 'markdown',
         previewStyle: 'vertical'
     });
+
     async function handlerEditor(e) {
 
         const editorBody = editor.getMarkdown();
-        const input =  document.getElementById('contents');
+        const input = document.getElementById('contents');
         input.value = editorBody;
     }
 
