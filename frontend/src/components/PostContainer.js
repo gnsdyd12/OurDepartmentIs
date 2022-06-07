@@ -4,6 +4,7 @@ import axios from "axios";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 import Post from "./Post";
+import { Button } from "@mui/material";
 
 const PostContainer = ({ postState }) => {
   // 게시물 리스트 정보
