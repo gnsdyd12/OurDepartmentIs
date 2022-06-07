@@ -1,9 +1,17 @@
 import React, { useEffect, useState, useContext } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+
+/* useContext */
 import { LoginInfoContext } from "../App";
+
+/* axios */
 import axios from "axios";
+
+/* toast-ui-viewer */
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import { Viewer } from "@toast-ui/react-editor";
+
+/* mui/material */
 import {
   Container,
   Typography,
@@ -13,12 +21,16 @@ import {
   IconButton,
   useMediaQuery,
 } from "@mui/material";
-import { basicColor } from "../color";
-import { API_BASE_URL } from "../URL";
+
+/* mui/icons-material */
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+
+/* mui/system */
 import { createTheme } from "@mui/system";
-import { ThemeProvider } from "@emotion/react";
+
+/* utils */
+import { API_BASE_URL } from "../utils/URL";
 
 const theme = createTheme({
   breakpoints: {
@@ -32,9 +44,16 @@ const theme = createTheme({
 });
 
 const ViewPost = () => {
-  // 게시글의 id 값을 url로부터 저장
+  // mediaQuery: 1440px 이상일 때만 좋아요 버튼 출력
+  const heartButtonActive = useMediaQuery("(min-width: 1440px)");
+
+  // 로그인 정보
+  const loginInfo = useContext(LoginInfoContext);
+
+  // 게시물 id를 url로부터 저장
   const { id } = useParams();
 
+  // 게시물 데이터 관리 객체
   const [post, setPost] = useState({
     id: 0,
     title: "",
@@ -43,13 +62,13 @@ const ViewPost = () => {
     views: 0,
   });
 
-  // API 수신을 완료했는지 판단하는 변수. 이 변수가 true로 바뀌고 난 후 화면에 출력
+  // 좋아요 상태 관리 객체
+  const [isHeart, setIsHeart] = useState(false);
+
+  // API 수신을 완료했는지 판단하는 객체. 이 객체가 true로 바뀌면 화면에 출력
   const [completeGetPost, setCompleteGetPost] = useState(false);
 
-  // 로그인 정보
-  const loginInfo = useContext(LoginInfoContext);
-
-  // 게시물 데이터({id: int, title: string, contents: string, writer: string, views: int}) 요청
+  // 게시물 데이터 요청 함수
   const getTemporaryPostList = async () => {
     axios
       .post(`/api/view_post/${id}`)
@@ -62,7 +81,7 @@ const ViewPost = () => {
       });
   };
 
-  // 좋아요 여부 데이터(boolean) 요청
+  // 좋아요 여부 데이터(boolean) 요청 함수
   const getIsHeart = async () => {
     axios
       .post("/api/is_heart", {
@@ -77,17 +96,7 @@ const ViewPost = () => {
       });
   };
 
-  useEffect(() => {
-    getTemporaryPostList();
-    loginInfo && getIsHeart();
-  }, []);
-
-  const heartButtonActive = useMediaQuery("(min-width: 1440px)");
-
-  // 좋아요 상태를 관리할 변수
-  const [isHeart, setIsHeart] = useState(false);
-
-  // 좋아요 버튼이 눌렸을 때, backend로 postId와 userId 데이터를 보내는 함수
+  // 좋아요 버튼이 눌렸을 때, backend로 postId와 userId 데이터를 전달하여 좋아요 상태값(boolean)을 반환받는 함수
   const heartBtnClickEvent = () => {
     axios
       .post("/api/heart_click", {
@@ -95,14 +104,18 @@ const ViewPost = () => {
         uid: loginInfo.id,
       })
       .then(function (response) {
-        console.log(response);
-        console.log(loginInfo.id);
         setIsHeart(response.data);
       })
       .catch(function (error) {
         console.log(error);
       });
   };
+
+  // Mount
+  useEffect(() => {
+    getTemporaryPostList();
+    loginInfo && getIsHeart();
+  }, []);
 
   return (
     <>
@@ -151,7 +164,7 @@ const ViewPost = () => {
         {/* 내용 */}
         {completeGetPost && <Viewer initialValue={post.contents} />}
 
-        {/* 수정, 삭제 */}
+        {/* 수정, 삭제 버튼 */}
         {loginInfo && loginInfo.name === post.writer && (
           <Stack spacing={2} direction="row" sx={{ mt: 6 }}>
             <Button
