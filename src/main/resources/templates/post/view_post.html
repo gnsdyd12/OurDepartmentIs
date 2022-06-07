@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css" />
+    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor-viewer.min.css"/>
 </head>
 <body>
 
@@ -12,8 +12,8 @@
 <div class="container">
     <h1 th:text="${post.title}"></h1>
     <div id="viewer"></div>
-<!--    <h6 th:text="${post.writer}"></h6>-->
-<!--    <textarea th:text="${post.contents}" readonly></textarea>-->
+    <!-- <h6 th:text="${post.writer}"></h6> -->
+    <!-- <textarea th:text="${post.contents}" readonly></textarea> -->
     <p th:text="${post.views}"></p>
     <div th:if="${user}!=null">
         <div th:if="${user.name} == ${post.writer}">
@@ -24,7 +24,7 @@
 </div>
 </body>
 <style>
-    .container{
+    .container {
         border: solid 1px;
         margin: 0px 100px 100px 100px;
 

@@ -1,37 +1,24 @@
 package com.example.project4_1.mypage.temporaryPost;
 
-import com.example.project4_1.SessionUser;
 import com.example.project4_1.URL;
 import com.example.project4_1.post.Post;
 import com.example.project4_1.post.PostDto;
 import com.example.project4_1.post.PostService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
 public class TemporaryPostController {
+
     final TemporaryPostService temporaryPostService;
     final PostService postService;
-    private final HttpSession httpSession;
-    URL URL = new URL();
 
-//    @GetMapping("temporaryPost")
-//    public ModelAndView temporaryPost() {
-//        SessionUser user = (SessionUser) httpSession.getAttribute("user");
-//        ModelAndView modelAndview = new ModelAndView();
-//        List<TemporaryPostDto.TemporaryPostListDto> tempPost = temporaryPostService.findByWriter().get();
-//        modelAndview.addObject("tempPost", tempPost);
-//        modelAndview.setViewName("/mypage/temporary_post");
-//        return modelAndview;
-//    }
+    URL URL = new URL();
 
     @PostMapping("/temporaryPost")
     public String temporaryPost_save(TemporaryPostDto.TemporaryPostSaveDto temporaryPostSaveDto) {
@@ -62,11 +49,12 @@ public class TemporaryPostController {
         return "redirect:" + URL.getAPI_BASE_URL();
     }
 
-    /* front에 TemporaryPostList 데이터 전송 */
+    // front에 TemporaryPostList 데이터 전송
     @GetMapping("/api/temporaryPostList")
     public @ResponseBody
     List<TemporaryPostDto.TemporaryPostListDto> temporaryPost() {
         List<TemporaryPostDto.TemporaryPostListDto> temporaryPostList = temporaryPostService.findByWriter().get();
         return temporaryPostList;
     }
+
 }

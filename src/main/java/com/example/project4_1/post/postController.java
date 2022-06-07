@@ -4,7 +4,6 @@ import com.example.project4_1.SessionUser;
 import com.example.project4_1.URL;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -16,19 +15,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class postController {
 
-    URL URL = new URL();
-
     final PostService postService;
     private final HttpSession httpSession;
 
-    //write 데이터 처리(post mapping)
+    URL URL = new URL();
+
+    // write 데이터 처리 (post mapping)
     @PostMapping("/postdata")
     public String savePost(PostDto.PostSaveDto postSaveDto) {
         postService.save(new Post(postSaveDto));
         return "redirect:" + URL.getAPI_BASE_URL();
     }
 
-    //list page
+    // list page
     @RequestMapping(value = "/", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView index(ModelAndView modelAndView) {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
@@ -40,7 +39,7 @@ public class postController {
         return modelAndView;
     }
 
-    //write 페이지
+    // write 페이지
     @GetMapping("write_post")
     public ModelAndView writePost(ModelAndView modelAndView) {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
@@ -51,7 +50,7 @@ public class postController {
         return modelAndView;
     }
 
-    //게시글 본문
+    // 게시글 본문
     @GetMapping("view_post/{id}")
     public ModelAndView viewpost(@PathVariable Long id) {
         Optional<PostDto.PostDetailDto> post = postService.findById(id);
@@ -85,7 +84,7 @@ public class postController {
         return "redirect:" + URL.getAPI_BASE_URL();
     }
 
-    /* front에 PostListDto 데이터 전송 */
+    // front에 PostListDto 데이터 전송
     @GetMapping("/api/postList")
     public @ResponseBody
     List<PostDto.PostListDto> postList() {
@@ -93,7 +92,7 @@ public class postController {
         return postList;
     }
 
-    /* front에 PostDetailDto 데이터 전송 */
+    // front에 PostDetailDto 데이터 전송
     @PostMapping("/api/view_post/{id}")
     public @ResponseBody
     PostDto.PostDetailDto postDetail(@PathVariable Long id) {
@@ -101,10 +100,12 @@ public class postController {
         return postDetail.get();
     }
 
+    // front에 로그인 정보 전송
     @PostMapping("/api/loginInfo")
     public @ResponseBody
     SessionUser user() {
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         return user;
     }
+    
 }

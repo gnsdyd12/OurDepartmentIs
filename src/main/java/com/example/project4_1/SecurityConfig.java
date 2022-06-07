@@ -18,11 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-    URL URL = new URL();
-
     private final CustomOAuth2UserService customOAuth2UserService;
     private final UserDetailsService userDetailsService;
 
+    URL URL = new URL();
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -31,7 +30,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable().headers().frameOptions().disable().and().authorizeRequests().antMatchers("/").permitAll().antMatchers("/write_post", "/mypage/**").hasRole("USER")
+        http.csrf().disable().headers().frameOptions().disable()
+                .and().authorizeRequests()
+                .antMatchers("/").permitAll()
+                .antMatchers("/write_post", "/mypage/**").hasRole("USER")
 //                .antMatchers("/**").authenticated()
 //                .and()
 //                .formLogin()
@@ -41,11 +43,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .passwordParameter("pw")
 //                .successHandler(new MyLoginSuccessHandler())
                 .and().logout().logoutSuccessUrl(URL.getAPI_BASE_URL()).and().oauth2Login()
-//                .loginPage("/loginForm")		// 인증이 필요한 URL에 접근하면 /loginForm으로 이동
-                .defaultSuccessUrl(URL.getAPI_BASE_URL())            // 로그인 성공하면 해당 URL 으로 이동
-//                .failureUrl("/loginForm")		// 로그인 실패 시 /loginForm으로 이동
+//                .loginPage("/loginForm") // 인증이 필요한 URL에 접근하면 /loginForm으로 이동
+                .defaultSuccessUrl(URL.getAPI_BASE_URL()) // 로그인 성공하면 해당 URL 으로 이동
+//                .failureUrl("/loginForm")	// 로그인 실패 시 /loginForm으로 이동
                 .userInfoEndpoint().userService(customOAuth2UserService);
-
     }
 
     @Override
@@ -57,4 +58,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/templates/**");
     }
+
 }

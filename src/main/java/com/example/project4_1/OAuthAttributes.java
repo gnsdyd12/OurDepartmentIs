@@ -4,10 +4,12 @@ import com.example.project4_1.user.Role;
 import com.example.project4_1.user.User;
 import lombok.Getter;
 import lombok.Builder;
+
 import java.util.Map;
 
 @Getter
 public class OAuthAttributes {
+
     private Map<String, Object> attributes;
     private String nameAttributeKey;
     private String name;
@@ -33,7 +35,7 @@ public class OAuthAttributes {
                 .build();
     }
 
-    private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String,Object> attributes){
+    private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
         return OAuthAttributes.builder()
                 .name((String) attributes.get("name"))
                 .email((String) attributes.get("email"))
@@ -51,4 +53,5 @@ public class OAuthAttributes {
                 .role(Role.USER)
                 .build();
     }
+
 }

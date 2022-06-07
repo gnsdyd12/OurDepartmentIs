@@ -22,22 +22,23 @@ public class MemberController {
     private final MemberRepository memberRepository;
 
     @GetMapping("/list")
-    public String mainPage(@AuthenticationPrincipal User user, Map<String, Object> model){
+    public String mainPage(@AuthenticationPrincipal User user, Map<String, Object> model) {
         List<Member> members = memberRepository.findAll();
         model.put("members", members);
         return "member/memberList";
     }
 
     @GetMapping("/admin")
-    public String adminPage(Map<String, Object> model){
+    public String adminPage(Map<String, Object> model) {
         return "member/adminPage";
     }
 
     @GetMapping("/newMember")
-    public String memberJoinForm(Member memberForm, Model model){
-        model.addAttribute("member",memberForm);
+    public String memberJoinForm(Member memberForm, Model model) {
+        model.addAttribute("member", memberForm);
         return "member/memberJoinForm";
     }
+
     @PostMapping("/newMember")
     public String memberJoin(Member memberForm) {
         memberForm.setPassword(passwordEncoder.encode(memberForm.getPassword()));// password 암호화
@@ -46,7 +47,8 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String getLoginForm(){
+    public String getLoginForm() {
         return "member/loginPage";
     }
+
 }
