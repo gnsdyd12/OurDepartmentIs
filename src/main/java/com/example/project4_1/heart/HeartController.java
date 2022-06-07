@@ -2,18 +2,19 @@ package com.example.project4_1.heart;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
 public class HeartController {
     final HeartService heartService;
     private final HttpSession httpSession;
 
-    @PostMapping("/heart_click")
-    public String heartsave(HeartDto.MyHeartDto myHeartDto){
+
+    @PostMapping("/api/heart_click")
+    public String heartsave(@RequestBody HeartDto.MyHeartDto myHeartDto){
         heartService.heartsave(myHeartDto);
         return "redirect:/";
     }

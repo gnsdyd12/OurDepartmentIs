@@ -66,6 +66,22 @@ const ViewPost = () => {
   // 좋아요 상태를 관리할 변수
   const [isHeart, setIsHeart] = useState(false);
 
+  // 좋아요 버튼이 눌렸을 때, backend로 postId와 userId 데이터를 보내는 함수
+  const heartBtnClickEvent = () => {
+    axios
+      .post("/api/heart_click", {
+        pid: { id },
+        uid: loginInfo,
+      })
+      .then(function (response) {
+        console.log(response);
+        console.log(loginInfo.id);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
+
   return (
     <>
       {/* 좋아요 버튼 */}
@@ -83,7 +99,8 @@ const ViewPost = () => {
         >
           <IconButton
             sx={{ border: "solid 1px" }}
-            onClick={() => setIsHeart(!isHeart)}
+            onClick={() => heartBtnClickEvent()}
+            disabled={loginInfo ? false : true}
           >
             {isHeart === false ? (
               <FavoriteBorderIcon sx={{ fontSize: "2rem" }} />
