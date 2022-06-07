@@ -1,37 +1,56 @@
 package com.example.project4_1.heart;
 
 import com.example.project4_1.post.Post;
+import com.example.project4_1.post.PostRepo;
 import com.example.project4_1.user.User;
+import com.example.project4_1.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class HeartService {
     private final HeartRepository heartRepository;
+    private final UserRepository userRepository;
+    private final PostRepo postRepository;
     private final HttpSession httpSession;
 
-    public void heartSaveAndRemove(HeartDto.MyHeartDto myHeartDto) {
+    public boolean heartSaveAndRemove(HeartDto.MyHeartDto myHeartDto) {
 
-        User uid = myHeartDto.getUid();
-        Post pid = myHeartDto.getPid();
+        Long uid = myHeartDto.getUid();
+        Long pid = myHeartDto.getPid();
 
-        Heart heart = new Heart();
-        heart = heartRepository.findHeartByUidAndPid(uid,pid).get();
+        User user = userRepository.findById(uid).get();
+        Post post = postRepository.findById(pid).get();
 
-        if(heart == null) {
-            heart.heartClick(myHeartDto);
-            heartRepository.save(heart);
-        }else{
-            heartRepository.delete(heart);
+        //Heart heart = new Heart();
+        Optional<Heart> heart = heartRepository.findByUidAndPid(user, post);
+
+        Heart newHeart = new Heart();
+        newHeart.checkHeart(post,user);
+
+        if (heart.isEmpty()) {
+            heartRepository.save(newHeart);
+            return true;
+        } else {
+            Heart deleteHeart= heart.get();
+            heartRepository.delete(deleteHeart);
+            return false;
         }
     }
 
     public Heart findByPidAndUid(HeartDto.IsHeartDto isHeartDto) {
-        User uid = isHeartDto.getUid();
-        Post pid = isHeartDto.getPid();
-        return heartRepository.findHeartByUidAndPid(uid, pid).get();
+
+        Long uid = isHeartDto.getUid();
+        Long pid = isHeartDto.getPid();
+
+        User user = userRepository.findById(uid).get();
+        Post post = postRepository.findById(pid).get();
+        Optional<Heart> heart = heartRepository.findByUidAndPid(user, post);
+        if (heart.isEmpty()) return null;
+        else return heart.get();
     }
 }

@@ -16,8 +16,11 @@ public class HeartController {
 
     /* 좋아요 및 좋아요 취소 */
     @PostMapping("/api/heart_click")
-    public void heartSave(@RequestBody HeartDto.MyHeartDto myHeartDto) {
-        heartService.heartSaveAndRemove(myHeartDto);
+    public boolean heartSave(@RequestBody HeartDto.MyHeartDto myHeartDto) {
+        myHeartDto.getPid();
+        myHeartDto.getUid();
+        boolean check = heartService.heartSaveAndRemove(myHeartDto);
+        return check;
     }
 
     /* 좋아요 된 게시물인지 frontend에 알림 */

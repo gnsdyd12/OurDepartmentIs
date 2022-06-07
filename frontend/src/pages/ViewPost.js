@@ -49,7 +49,8 @@ const ViewPost = () => {
   // 로그인 정보
   const loginInfo = useContext(LoginInfoContext);
 
-  useEffect(() => {
+  // 게시물 데이터({id: int, title: string, contents: string, writer: string, views: int}) 요청
+  const getTemporaryPostList = async () => {
     axios
       .post(`/api/view_post/${id}`)
       .then((response) => {
@@ -57,8 +58,28 @@ const ViewPost = () => {
         setCompleteGetPost(true);
       })
       .catch((error) => {
-        alert(error);
+        console.log(error);
       });
+  };
+
+  // 좋아요 여부 데이터(boolean) 요청
+  const getIsHeart = async () => {
+    axios
+      .post("/api/is_heart", {
+        pid: id,
+        uid: loginInfo.id,
+      })
+      .then((response) => {
+        setIsHeart(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
+
+  useEffect(() => {
+    getTemporaryPostList();
+    loginInfo && getIsHeart();
   }, []);
 
   const heartButtonActive = useMediaQuery("(min-width: 1440px)");
@@ -70,12 +91,13 @@ const ViewPost = () => {
   const heartBtnClickEvent = () => {
     axios
       .post("/api/heart_click", {
-        pid: { id },
-        uid: loginInfo,
+        pid: id,
+        uid: loginInfo.id,
       })
       .then(function (response) {
         console.log(response);
         console.log(loginInfo.id);
+        setIsHeart(response.data);
       })
       .catch(function (error) {
         console.log(error);
