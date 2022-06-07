@@ -20,7 +20,7 @@ public class Heart {
     @JoinColumn(name = "user_id")
     private User uid; // 유저 아이디
 
-    public void heartclick(HeartDto.MyHeartDto myHeartDto) {
+    public void heartClick(HeartDto.MyHeartDto myHeartDto) {
         this.hid = this.hid;
         this.pid = myHeartDto.getPid();
         this.uid = myHeartDto.getUid();

@@ -1,5 +1,7 @@
 package com.example.project4_1.heart;
 
+import com.example.project4_1.post.Post;
+import com.example.project4_1.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +13,25 @@ public class HeartService {
     private final HeartRepository heartRepository;
     private final HttpSession httpSession;
 
-    public void heartsave(HeartDto.MyHeartDto myHeartDto) {
+    public void heartSaveAndRemove(HeartDto.MyHeartDto myHeartDto) {
 
-        // 이미 좋아요 된 캠페인일 경우 409 에러
-//        if (findHeartWithUserAndCampaignId(heartDto).isPresent())
-//            throw new CustomException(ALREADY_HEARTED);
+        User uid = myHeartDto.getUid();
+        Post pid = myHeartDto.getPid();
 
         Heart heart = new Heart();
-        heart.heartclick(myHeartDto);
-        heartRepository.save(heart);
+        heart = heartRepository.findHeartByUidAndPid(uid,pid).get();
+
+        if(heart == null) {
+            heart.heartClick(myHeartDto);
+            heartRepository.save(heart);
+        }else{
+            heartRepository.delete(heart);
+        }
+    }
+
+    public Heart findByPidAndUid(HeartDto.IsHeartDto isHeartDto) {
+        User uid = isHeartDto.getUid();
+        Post pid = isHeartDto.getPid();
+        return heartRepository.findHeartByUidAndPid(uid, pid).get();
     }
 }

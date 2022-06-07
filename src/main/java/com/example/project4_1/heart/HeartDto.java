@@ -18,4 +18,13 @@ public class HeartDto {
         private User uid; // 유저 아이디
     }
 
+    @Getter
+    @Setter
+    @AllArgsConstructor
+    public static class IsHeartDto{
+        private Post pid; // 게시물번호
+        private User uid; // 유저 아이디
+    }
+
+
 }
