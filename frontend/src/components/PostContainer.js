@@ -39,9 +39,25 @@ const PostContainer = ({ postState }) => {
       });
   };
 
+  // 좋아요 게시물 데이터 요청 함수
+  const getHeartPostList = async () => {
+    await axios
+      .get("/api/heartPostList")
+      .then((response) => {
+        setPostList(response.data);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
+
   // Mount
   useEffect(() => {
-    postState === "All" ? getAllPostList() : getTemporaryPostList();
+    postState === "All"
+      ? getAllPostList()
+      : postState === "Temporary"
+      ? getTemporaryPostList()
+      : getHeartPostList();
   }, []);
 
   return (

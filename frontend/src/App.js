@@ -11,6 +11,7 @@ import Header from "./components/Header";
 import Home from "./pages/Home";
 import ViewPost from "./pages/ViewPost";
 import TemporarySave from "./pages/TemporarySave";
+import Heart from "./pages/Heart";
 
 /* createContext */
 export const LoginInfoContext = React.createContext();
@@ -45,6 +46,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/temporary_save" element={<TemporarySave />} />
+            <Route path="/heart" element={<Heart />} />
             <Route path="/view_post/:id" element={<ViewPost />} />
           </Routes>
         </BrowserRouter>

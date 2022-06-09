@@ -2,9 +2,14 @@ package com.example.project4_1.heart;
 
 import com.example.project4_1.post.Post;
 import com.example.project4_1.user.User;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
+
+@Getter
+@Setter
 @Entity
 public class Heart {
 
