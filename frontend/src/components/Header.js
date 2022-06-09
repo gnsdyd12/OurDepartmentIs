@@ -60,7 +60,10 @@ const Header = () => {
     },
     {
       title: "좋아요",
-      onClick: () => console.log("좋아요 클릭"),
+      onClick: () => {
+        navigate("/heart");
+        handleCloseUserMenu();
+      },
     },
     {
       title: <LogoutIcon />,
