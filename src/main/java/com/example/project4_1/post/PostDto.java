@@ -45,6 +45,7 @@ public class PostDto {
         private String title;
         private String contents;
         private String writer;
+        private Long heartCount;
 
     }
 
@@ -58,6 +59,7 @@ public class PostDto {
         private String contents = "";
         private String writer = "";
         private Long views = 0L;
+        private Long heartCount = 0L;
 
         public PostDetailDto(Post post) {
             this.id = post.getId();
@@ -65,6 +67,7 @@ public class PostDto {
             this.contents = post.getContents();
             this.writer = post.getWriter();
             this.views = post.getViews();
+            this.heartCount = post.getHeartCount();
         }
 
     }

@@ -3,9 +3,11 @@ package com.example.project4_1.heart;
 import com.example.project4_1.SessionUser;
 import com.example.project4_1.post.Post;
 import com.example.project4_1.post.PostRepo;
+import com.example.project4_1.post.PostService;
 import com.example.project4_1.user.User;
 import com.example.project4_1.user.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.dialect.PostgreSQL10Dialect;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
@@ -20,6 +22,7 @@ public class HeartService {
     private final HeartRepository heartRepository;
     private final UserRepository userRepository;
     private final PostRepo postRepository;
+    private final PostService postService;
     private final HttpSession httpSession;
 
     public boolean heartSaveAndRemove(HeartDto.MyHeartDto myHeartDto) {
@@ -36,10 +39,12 @@ public class HeartService {
 
         if (heart.isEmpty()) {
             heartRepository.save(newHeart);
+            postService.heartPlus(pid);
             return true;
         } else {
             Heart deleteHeart = heart.get();
             heartRepository.delete(deleteHeart);
+            postService.heartMinus(pid);
             return false;
         }
     }
