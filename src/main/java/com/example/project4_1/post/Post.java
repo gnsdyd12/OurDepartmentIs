@@ -1,15 +1,18 @@
 package com.example.project4_1.post;
 
+import com.example.project4_1.heart.Heart;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO) //id 자동 증가
+
     private Long id;
 
     @Column
@@ -28,6 +31,11 @@ public class Post {
 
     @Column
     private Long views = 0L; //조회수
+
+    // 게시물 삭제 시 DB table에서 게시물에 등록된 좋아요 개체 삭제
+    @OneToMany
+            (mappedBy="pid",cascade = CascadeType.ALL)
+    List<Heart> hearts;
 
     public Post() {
 

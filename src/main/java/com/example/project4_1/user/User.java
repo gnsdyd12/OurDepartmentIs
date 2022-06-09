@@ -1,5 +1,6 @@
 package com.example.project4_1.user;
 
+import com.example.project4_1.heart.Heart;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
@@ -28,6 +30,11 @@ public class User {
     @Column
     @NotNull
     private Role role;
+
+    // 사용자 삭제 시 DB table에서 사용자가 등록한 좋아요 개체 삭제
+    @OneToMany
+            (mappedBy="uid",cascade = CascadeType.ALL)
+    List<Heart> hearts;
 
     @Builder
     public User(String name, String email, String picture, Role role) {
