@@ -54,7 +54,7 @@ public class PostService {
         });
     }
 
-    public void view_Count(Long id) {
+    public void viewCount(Long id) {
         Optional<Post> post = postRepo.findById(id);
         post.ifPresent(m -> {
             m.setViews(m.getViews() + 1L);

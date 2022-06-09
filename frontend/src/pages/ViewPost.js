@@ -60,20 +60,25 @@ const ViewPost = () => {
     contents: "",
     writer: "",
     views: 0,
+    heartCount: 0,
   });
 
   // 좋아요 상태 관리 객체
   const [isHeart, setIsHeart] = useState(false);
 
+  // 좋아요 개수 관리 객체
+  const [heartCount, setHeartCount] = useState(0);
+
   // API 수신을 완료했는지 판단하는 객체. 이 객체가 true로 바뀌면 화면에 출력
   const [completeGetPost, setCompleteGetPost] = useState(false);
 
   // 게시물 데이터 요청 함수
-  const getTemporaryPostList = async () => {
+  const getPost = async () => {
     axios
       .post(`/api/view_post/${id}`)
       .then((response) => {
         setPost(response.data);
+        setHeartCount(response.data.heartCount);
         setCompleteGetPost(true);
       })
       .catch((error) => {
@@ -105,6 +110,11 @@ const ViewPost = () => {
       })
       .then(function (response) {
         setIsHeart(response.data);
+        {
+          response.data === true
+            ? setHeartCount(heartCount + 1)
+            : setHeartCount(heartCount - 1);
+        }
       })
       .catch(function (error) {
         console.log(error);
@@ -113,7 +123,7 @@ const ViewPost = () => {
 
   // Mount
   useEffect(() => {
-    getTemporaryPostList();
+    getPost();
     loginInfo && getIsHeart();
   }, []);
 
@@ -143,7 +153,7 @@ const ViewPost = () => {
               <FavoriteIcon sx={{ fontSize: "2rem" }} />
             )}
           </IconButton>
-          <Typography textAlign="center">100</Typography>
+          <Typography textAlign="center">{heartCount}</Typography>
         </Box>
       )}
 

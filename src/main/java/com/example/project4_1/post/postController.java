@@ -54,7 +54,7 @@ public class postController {
     @GetMapping("view_post/{id}")
     public ModelAndView viewpost(@PathVariable Long id) {
         Optional<PostDto.PostDetailDto> post = postService.findById(id);
-        postService.view_Count(id);
+        postService.viewCount(id);
         ModelAndView modelAndView = new ModelAndView();
         SessionUser user = (SessionUser) httpSession.getAttribute("user");
         modelAndView.addObject("user", user);
@@ -97,6 +97,7 @@ public class postController {
     public @ResponseBody
     PostDto.PostDetailDto postDetail(@PathVariable Long id) {
         Optional<PostDto.PostDetailDto> postDetail = postService.findById(id);
+        postService.viewCount(id);
         return postDetail.get();
     }
 
