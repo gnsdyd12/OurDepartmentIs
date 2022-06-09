@@ -33,7 +33,8 @@ const Post = ({ post, postState }) => {
         sx={{ width: 345, height: 345, cursor: "pointer", boxShadow: "3" }}
         onClick={
           postState === "Temporary"
-            ? () => (window.location.href =
+            ? () =>
+                (window.location.href =
                   API_BASE_URL + `/continueWrite/${post.id}`)
             : () => navigate(`/view_post/${post.id}`)
         }
@@ -58,7 +59,7 @@ const Post = ({ post, postState }) => {
           </Typography>
           <Box sx={{ display: "flex" }} fontSize="14px">
             <FavoriteBorderIcon fontSize="small" />
-            <Typography fontSize="14px">&nbsp;3</Typography>
+            <Typography fontSize="14px">&nbsp;{post.heartCount}</Typography>
           </Box>
         </CardContent>
       </Card>
