@@ -1,5 +1,3 @@
-Heart.js;
-
 import React from "react";
 
 /* components */

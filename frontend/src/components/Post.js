@@ -32,11 +32,10 @@ const Post = ({ post, postState }) => {
       <Card
         sx={{ width: 345, height: 345, cursor: "pointer", boxShadow: "3" }}
         onClick={
-          postState === "All"
-            ? () => navigate(`/view_post/${post.id}`)
-            : () =>
-                (window.location.href =
+          postState === "Temporary"
+            ? () => (window.location.href =
                   API_BASE_URL + `/continueWrite/${post.id}`)
+            : () => navigate(`/view_post/${post.id}`)
         }
       >
         {/* 제목 */}
