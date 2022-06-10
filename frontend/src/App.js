@@ -12,6 +12,7 @@ import Home from "./pages/Home";
 import ViewPost from "./pages/ViewPost";
 import TemporarySave from "./pages/TemporarySave";
 import Heart from "./pages/Heart";
+import Search from "./pages/Search";
 
 /* createContext */
 export const LoginInfoContext = React.createContext();
@@ -48,6 +49,7 @@ function App() {
             <Route path="/temporary_save" element={<TemporarySave />} />
             <Route path="/heart" element={<Heart />} />
             <Route path="/view_post/:id" element={<ViewPost />} />
+            <Route path="/search" element={<Search />} />
           </Routes>
         </BrowserRouter>
       </div>

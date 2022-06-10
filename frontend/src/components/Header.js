@@ -16,12 +16,15 @@ import {
   Button,
   Tooltip,
   MenuItem,
+  Stack,
 } from "@mui/material";
 
 /* mui/icons-material */
-import AdbIcon from "@mui/icons-material/Adb";
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
+import SearchIcon from "@mui/icons-material/Search";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import CloudIcon from "@mui/icons-material/Cloud";
 
 /* utils */
 import { API_BASE_URL } from "../utils/URL";
@@ -75,23 +78,26 @@ const Header = () => {
   const loginInfo = useContext(LoginInfoContext);
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: basicColor }}>
+    <AppBar
+      position="static"
+      sx={{ backgroundColor: basicColor, height: 80, justifyContent: "center" }}
+    >
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: "space-between", px: 3 }}>
           {/* 로고 */}
           <Box sx={{ display: "flex" }}>
             {/* 아이콘 */}
-            <AdbIcon />
+            <CloudIcon sx={{ fontSize: 36, mx: "4px" }} />
 
             {/* Text */}
             <Typography
-              variant="h6"
+              variant="h4"
               noWrap
               component="a"
               href="/"
               sx={{
-                mr: 2,
                 display: "flex",
+                mx: "4px",
                 fontFamily: "monospace",
                 fontWeight: 700,
                 letterSpacing: ".3rem",
@@ -103,54 +109,67 @@ const Header = () => {
             </Typography>
           </Box>
 
-          {/* 로그인 / 계정 메뉴 버튼 */}
-          {loginInfo ? (
-            <Box sx={{ flexGrow: 0 }}>
-              <Tooltip title="메뉴 열어보기">
-                <Button onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                  <img
-                    src={loginInfo.picture}
-                    style={{
-                      width: "45px",
-                      height: "45px",
-                      borderRadius: "22.5px",
-                    }}
-                  />
-                </Button>
-              </Tooltip>
+          {/* 검색, 로그인 메뉴 버튼 Stack */}
+          <Stack direction="row" spacing={4}>
+            <Tooltip title="검색하기">
+              <IconButton sx={{ p: 0 }} onClick={() => navigate("/search")}>
+                <SearchIcon sx={{ fontSize: 36 }} />
+              </IconButton>
+            </Tooltip>
+            {/* 로그인 메뉴 버튼 */}
+            {loginInfo ? (
+              <Box sx={{ flexGrow: 0 }}>
+                <Tooltip title="메뉴 열어보기">
+                  <Button onClick={handleOpenUserMenu} sx={{ p: 0 }}>
+                    <img
+                      src={loginInfo.picture}
+                      style={{
+                        width: "45px",
+                        height: "45px",
+                        borderRadius: "22.5px",
+                      }}
+                    />
+                    <KeyboardArrowDownIcon
+                      sx={{ color: "rgba(0, 0, 0, 0.54)" }}
+                    />
+                  </Button>
+                </Tooltip>
 
-              <Menu
-                sx={{ mt: "45px" }}
-                id="menu-appbar"
-                anchorEl={anchorElUser}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right",
-                }}
-                open={Boolean(anchorElUser)}
-                onClose={handleCloseUserMenu}
-              >
-                {loginMenu.map((menuItem) => (
-                  <MenuItem key={menuItem.title} onClick={menuItem.onClick}>
-                    <Typography textAlign="center">{menuItem.title}</Typography>
-                  </MenuItem>
-                ))}
-              </Menu>
-            </Box>
-          ) : (
-            <>
-              <a href={API_BASE_URL + "/oauth2/authorization/google"}>
-                <IconButton>
-                  <LoginIcon />
-                </IconButton>
-              </a>
-            </>
-          )}
+                <Menu
+                  sx={{ mt: "45px" }}
+                  id="menu-appbar"
+                  anchorEl={anchorElUser}
+                  anchorOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: "top",
+                    horizontal: "right",
+                  }}
+                  open={Boolean(anchorElUser)}
+                  onClose={handleCloseUserMenu}
+                >
+                  {loginMenu.map((menuItem) => (
+                    <MenuItem key={menuItem.title} onClick={menuItem.onClick}>
+                      <Typography textAlign="center">
+                        {menuItem.title}
+                      </Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </Box>
+            ) : (
+              <>
+                <a href={API_BASE_URL + "/oauth2/authorization/google"}>
+                  <IconButton>
+                    <LoginIcon sx={{ fontSize: 36 }} />
+                  </IconButton>
+                </a>
+              </>
+            )}
+          </Stack>
         </Toolbar>
       </Container>
     </AppBar>
