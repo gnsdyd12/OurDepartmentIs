@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 public class PostDto {
 
     @Getter
@@ -46,6 +48,7 @@ public class PostDto {
         private String contents;
         private String writer;
         private Long heartCount;
+        private LocalDateTime createTime;
 
     }
 
@@ -59,6 +62,7 @@ public class PostDto {
         private String contents = "";
         private String writer = "";
         private Long views = 0L;
+        private LocalDateTime createTime;
         private Long heartCount = 0L;
 
         public PostDetailDto(Post post) {
@@ -68,6 +72,7 @@ public class PostDto {
             this.writer = post.getWriter();
             this.views = post.getViews();
             this.heartCount = post.getHeartCount();
+            this.createTime=post.getCreateTime();
         }
 
     }
