@@ -17,6 +17,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 
 /* utils */
 import { API_BASE_URL } from "../utils/URL";
+import { getDate } from "../utils/date";
 
 const Post = ({ post, postState }) => {
   const navigate = useNavigate();
@@ -43,16 +44,29 @@ const Post = ({ post, postState }) => {
         <CardHeader title={getPreview(post.title, 15)} />
 
         {/* 본문 */}
-        <CardContent sx={{ height: "180px" }}>
+        <CardContent sx={{ height: "165px" }}>
           <Typography variant="body2" color="text.secondary">
             {getPreview(post.contents, 150)}
           </Typography>
         </CardContent>
 
+        {/* 작성일 */}
+        <Typography
+          variant="body2"
+          color="text.secondary"
+          sx={{ px: 2, py: 0.5 }}
+        >
+          {getDate(post.createTime)}
+        </Typography>
+
         {/* 작성자, 좋아요 */}
         <Divider variant="middle" />
         <CardContent
-          sx={{ display: "flex", justifyContent: "space-between", mx: 1 }}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            mx: 1,
+          }}
         >
           <Typography fontSize="14px">
             by <strong>{post.writer}</strong>

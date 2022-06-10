@@ -35,6 +35,7 @@ import { createTheme } from "@mui/system";
 
 /* utils */
 import { API_BASE_URL } from "../utils/URL";
+import { getFullDate } from "../utils/date";
 
 const theme = createTheme({
   breakpoints: {
@@ -120,6 +121,7 @@ const ViewPost = () => {
     writer: "",
     views: 0,
     heartCount: 0,
+    createTime: "",
   });
 
   // 좋아요 상태 관리 객체
@@ -137,6 +139,7 @@ const ViewPost = () => {
       .post(`/api/view_post/${id}`)
       .then((response) => {
         setPost(response.data);
+        console.log(response.data);
         setHeartCount(response.data.heartCount);
         setCompleteGetPost(true);
       })
@@ -206,7 +209,7 @@ const ViewPost = () => {
           {post.title}
         </Typography>
 
-        {/* 작성자, 작성일, 좋아요 버튼 Box */}
+        {/* 작성자, 작성일, 조회수, 좋아요 버튼 Box */}
         <Box
           sx={{
             display: "flex",
@@ -215,7 +218,7 @@ const ViewPost = () => {
             my: 2,
           }}
         >
-          {/* 작성자, 작성일 Stack */}
+          {/* 작성자, 작성일, 조회수 Stack */}
           <Stack
             direction="row"
             spacing={2}
@@ -225,7 +228,12 @@ const ViewPost = () => {
             <Typography variant="caption">by {post.writer}</Typography>
 
             {/* 작성일 */}
-            <Typography variant="caption">2022.06.02</Typography>
+            <Typography variant="caption">
+              {getFullDate(post.createTime)}
+            </Typography>
+
+            {/* 조회수 */}
+            <Typography variant="caption">조회수: {post.views}</Typography>
           </Stack>
 
           {/* 좋아요 버튼 */}
