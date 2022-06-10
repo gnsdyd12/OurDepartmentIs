@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 
+/* CSS */
+import styles from "../App.module.css";
+
 /* useContext */
 import { LoginInfoContext } from "../App";
 
@@ -195,11 +198,11 @@ const ViewPost = () => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          my: 6,
+          my: 4,
         }}
       >
         {/* 제목 */}
-        <Typography variant="h2" sx={{ mb: 4 }}>
+        <Typography variant="h2" sx={{ my: 2 }}>
           {post.title}
         </Typography>
 
@@ -209,7 +212,7 @@ const ViewPost = () => {
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
-            mb: 6,
+            my: 2,
           }}
         >
           {/* 작성자, 작성일 Stack */}
@@ -228,6 +231,7 @@ const ViewPost = () => {
           {/* 좋아요 버튼 */}
           {!heartBtnPosition && <RightHeartBtn />}
         </Box>
+        <Divider sx={{ mb: 2 }} />
 
         {/* 내용 */}
         {completeGetPost && <Viewer initialValue={post.contents} />}
@@ -236,24 +240,24 @@ const ViewPost = () => {
         {loginInfo && loginInfo.name === post.writer && (
           <Stack spacing={2} direction="row" sx={{ mt: 6 }}>
             {/* 수정 버튼 */}
-            <Button
-              variant="outlined"
+            <button
+              className={styles.modifyBtn}
               onClick={() =>
                 (window.location.href = API_BASE_URL + `/modify_post/${id}`)
               }
             >
               수정
-            </Button>
+            </button>
 
             {/* 삭제 버튼 */}
-            <Button
-              variant="outlined"
+            <button
+              className={styles.deleteBtn}
               onClick={() =>
                 (window.location.href = API_BASE_URL + `/delete_post/${id}`)
               }
             >
               삭제
-            </Button>
+            </button>
           </Stack>
         )}
       </Container>
