@@ -19,7 +19,6 @@
     <div id="editor"></div>
     <div class="writer">
         <label>
-            <div 작성자 : th:text="${user.name}"></div>
             <input type="text" id="writer" name="writer" th:value="${user.name}" hidden>
         </label>
     </div>
@@ -76,6 +75,11 @@
         font-weight: bold;
         font-size: 15px;
         border-radius: 5px;
+        cursor: pointer;
+        transition:all 0.9s, color 0.2s;
+    }
+    .summit_btn:hover{
+        box-shadow:90px 0 0 0 rgba(0,0,0,0.2) inset;
     }
 
     .temp_summit_btn {
@@ -91,6 +95,12 @@
         font-size: 15px;
         border-radius: 5px;
         border: solid 2px;
+        cursor: pointer;
+        transition:all 0.9s, color 0.2s;
+    }
+    .temp_summit_btn:hover{
+
+        box-shadow:90px 0 0 0 rgba(0,0,0,0.2) inset;
     }
 </style>
 <script>
