@@ -9,19 +9,17 @@
 
 </head>
 <body>
-<h2>글 쓰기</h2>
 <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js">
 </script>
-<div id="editor"></div>
 
 <form id="writeForm" th:action="@{'/modify_post/'+${post.id}}" method="post" th:object="${post}"
       onsubmit="handlerEditor()">
     <div class="title">
         <label>
-            제목:
-            <input type="text" id="title" th:field="*{title}" name="title" required>
+            <input placeholder="제목을 입력하세요" type="text" id="title" th:field="*{title}" name="title" required>
         </label>
     </div>
+    <div id="editor"></div>
     <div class="writer">
         <label>
             <div 작성자 : th:text="${session.writer}"></div>
@@ -35,11 +33,29 @@
 </form>
 </body>
 <style>
-    .title > label > input {
-        width: 300px;
-        height: 30px;
-        margin: 10px;
+    .title {
+        padding-top: 30px;
+        padding-bottom: 30px;
     }
+
+    .title > label {
+        font-size: 20pt;
+        font-weight: bold;
+    }
+
+    .title > label > input {
+        border: solid 3px #9091ee;
+        border-radius: 5px;
+        margin-left: 25%;
+        width: 48%;
+        height: 50px;
+        font-size: 30px;
+    }
+
+    .title > label > input:focus {
+        outline: none;
+    }
+
 
     .contents > label > input {
         height: 300px;
@@ -47,9 +63,28 @@
         margin: 10px;
     }
 
+    .title > label > input::placeholder {
+        font-size: 30px;
+    }
+
     .summit_btn {
         position: relative;
-        left: 49%;
+        left: 47%;
+        width: 90px;
+        height: 40px;
+        margin-top: 20px;
+        background-color: #9091ee;
+        border: hidden;
+        color: white;
+        font-weight: bold;
+        font-size: 15px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: all 0.9s, color 0.2s;
+    }
+
+    .summit_btn:hover {
+        box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
     }
 </style>
 <script>
