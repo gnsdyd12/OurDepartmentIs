@@ -20,6 +20,7 @@ import {
   Button,
   IconButton,
   useMediaQuery,
+  Divider,
 } from "@mui/material";
 
 /* mui/icons-material */
@@ -44,8 +45,63 @@ const theme = createTheme({
 });
 
 const ViewPost = () => {
-  // mediaQuery: 1440px 이상일 때만 좋아요 버튼 출력
-  const heartButtonActive = useMediaQuery("(min-width: 1440px)");
+  // mediaQuery: 해상도에 따른 좋아요 버튼 출력 위치 지정
+  const heartBtnPosition = useMediaQuery("(min-width: 1200px)");
+
+  // heartBtnPosition 일 때 좋아요 버튼
+  const LeftHeartBtn = () => {
+    return (
+      <Box
+        sx={{
+          position: "fixed",
+          top: "20%",
+          border: "1px solid",
+          borderRadius: 8,
+          py: "14px",
+          px: "4px",
+          ml: "0px",
+        }}
+      >
+        <IconButton
+          sx={{ border: "solid 1px" }}
+          onClick={() => heartBtnClickEvent()}
+          disabled={loginInfo ? false : true}
+        >
+          {isHeart === false ? (
+            <FavoriteBorderIcon sx={{ fontSize: "2rem" }} />
+          ) : (
+            <FavoriteIcon sx={{ fontSize: "2rem" }} />
+          )}
+        </IconButton>
+        <Typography textAlign="center">{heartCount}</Typography>
+      </Box>
+    );
+  };
+
+  // heartBtnPosition 아닐 때 좋아요 버튼
+  const RightHeartBtn = () => {
+    return (
+      <IconButton
+        onClick={() => heartBtnClickEvent()}
+        disabled={loginInfo ? false : true}
+        sx={{
+          border: "1px solid",
+          borderRadius: 8,
+          px: "12px",
+          py: "0px",
+        }}
+      >
+        {isHeart === false ? (
+          <FavoriteBorderIcon sx={{ fontSize: "small" }} />
+        ) : (
+          <FavoriteIcon sx={{ fontSize: "small" }} />
+        )}
+        <Typography variant="caption" textAlign="center">
+          &nbsp;&nbsp;{heartCount}
+        </Typography>
+      </IconButton>
+    );
+  };
 
   // 로그인 정보
   const loginInfo = useContext(LoginInfoContext);
@@ -128,35 +184,11 @@ const ViewPost = () => {
   }, []);
 
   return (
-    <>
+    <Container sx={{ display: "flex", maxWidth: "lg" }}>
       {/* 좋아요 버튼 */}
-      {heartButtonActive && (
-        <Box
-          sx={{
-            position: "fixed",
-            top: "20%",
-            left: "10%",
-            border: "1px solid",
-            borderRadius: 8,
-            py: "14px",
-            px: "4px",
-          }}
-        >
-          <IconButton
-            sx={{ border: "solid 1px" }}
-            onClick={() => heartBtnClickEvent()}
-            disabled={loginInfo ? false : true}
-          >
-            {isHeart === false ? (
-              <FavoriteBorderIcon sx={{ fontSize: "2rem" }} />
-            ) : (
-              <FavoriteIcon sx={{ fontSize: "2rem" }} />
-            )}
-          </IconButton>
-          <Typography textAlign="center">{heartCount}</Typography>
-        </Box>
-      )}
+      {heartBtnPosition && <LeftHeartBtn />}
 
+      {/* 게시물 */}
       <Container
         maxWidth="md"
         sx={{
@@ -167,16 +199,43 @@ const ViewPost = () => {
         }}
       >
         {/* 제목 */}
-        <Typography variant="h2" sx={{ mb: 2 }}>
+        <Typography variant="h2" sx={{ mb: 4 }}>
           {post.title}
         </Typography>
+
+        {/* 작성자, 작성일, 좋아요 버튼 Box */}
+        <Box
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            mb: 6,
+          }}
+        >
+          {/* 작성자, 작성일 Stack */}
+          <Stack
+            direction="row"
+            spacing={2}
+            divider={<Divider orientation="vertical" flexItem />}
+          >
+            {/* 작성자 */}
+            <Typography variant="caption">by {post.writer}</Typography>
+
+            {/* 작성일 */}
+            <Typography variant="caption">2022.06.02</Typography>
+          </Stack>
+
+          {/* 좋아요 버튼 */}
+          {!heartBtnPosition && <RightHeartBtn />}
+        </Box>
 
         {/* 내용 */}
         {completeGetPost && <Viewer initialValue={post.contents} />}
 
-        {/* 수정, 삭제 버튼 */}
+        {/* 수정, 삭제 버튼 Stack */}
         {loginInfo && loginInfo.name === post.writer && (
           <Stack spacing={2} direction="row" sx={{ mt: 6 }}>
+            {/* 수정 버튼 */}
             <Button
               variant="outlined"
               onClick={() =>
@@ -185,6 +244,8 @@ const ViewPost = () => {
             >
               수정
             </Button>
+
+            {/* 삭제 버튼 */}
             <Button
               variant="outlined"
               onClick={() =>
@@ -196,7 +257,7 @@ const ViewPost = () => {
           </Stack>
         )}
       </Container>
-    </>
+    </Container>
   );
 };
 
