@@ -13,7 +13,6 @@ import Post from "./Post";
 const PostContainer = ({ postState }) => {
   // 게시물 리스트 관리 객체
   const [postList, setPostList] = useState([]);
-  // post = { id: int, title: string, contents: string, writer: string }
 
   // 전체 게시물 데이터 요청 함수
   const getAllPostList = async () => {
