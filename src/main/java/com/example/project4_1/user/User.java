@@ -1,6 +1,7 @@
 package com.example.project4_1.user;
 
 import com.example.project4_1.heart.Heart;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Builder;
 import lombok.Getter;
@@ -32,6 +33,7 @@ public class User {
     private Role role;
 
     // 사용자 삭제 시 DB table에서 사용자가 등록한 좋아요 개체 삭제
+    @JsonIgnore
     @OneToMany
             (mappedBy="uid",cascade = CascadeType.ALL)
     List<Heart> hearts;

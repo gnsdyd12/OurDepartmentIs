@@ -1,6 +1,7 @@
 package com.example.project4_1.post;
 
 import com.example.project4_1.heart.Heart;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -41,6 +42,7 @@ public class Post {
     private Long heartCount = 0L; // 좋아요 수
 
     // 게시물 삭제 시 DB table에서 게시물에 등록된 좋아요 개체 삭제
+    @JsonIgnore
     @OneToMany
             (mappedBy="pid",cascade = CascadeType.ALL)
     List<Heart> hearts;
