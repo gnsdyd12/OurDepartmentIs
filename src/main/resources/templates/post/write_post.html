@@ -5,11 +5,10 @@
     <title>Title</title>
     <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.809.0.min.js"></script>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
 </head>
 <body>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-
-
 <form id="writeForm" method="POST" onsubmit="handlerEditor()">
     <div class="title">
         <label>
@@ -17,6 +16,7 @@
         </label>
     </div>
     <div id="editor"></div>
+    <script th:src="@{https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js}"></script>
     <div class="writer">
         <label>
             <input type="text" id="writer" name="writer" th:value="${user.name}" hidden>
@@ -76,10 +76,11 @@
         font-size: 15px;
         border-radius: 5px;
         cursor: pointer;
-        transition:all 0.9s, color 0.2s;
+        transition: all 0.9s, color 0.2s;
     }
-    .summit_btn:hover{
-        box-shadow:90px 0 0 0 rgba(0,0,0,0.2) inset;
+
+    .summit_btn:hover {
+        box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
     }
 
     .temp_summit_btn {
@@ -96,16 +97,15 @@
         border-radius: 5px;
         border: solid 2px;
         cursor: pointer;
-        transition:all 0.9s, color 0.2s;
+        transition: all 0.9s, color 0.2s;
     }
-    .temp_summit_btn:hover{
 
-        box-shadow:90px 0 0 0 rgba(0,0,0,0.2) inset;
+    .temp_summit_btn:hover {
+        box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
     }
 </style>
+
 <script>
-
-
     const Editor = toastui.Editor;
 
     const title = document.querySelector("title");
@@ -117,13 +117,50 @@
         previewStyle: 'vertical'
     });
 
-    async function handlerEditor(e) {
+    // 이미지 업로드 시 aws 서버에 해당 파일을 업로드하고, 서버에 업로드 된 파일의 이미지 주소를 대신 불러오는 함수
+    editor.addHook("addImageBlobHook", function (blob, callback) {
+        const albumBucketName = 'ourdepartmentis'; // S3의 버킷 이름
+        const region = 'ap-northeast-2'; // 서울
+        const accessKeyId = 'AKIAZEKJEVQEERS6QHNL'; // IAM에서 생성한 사용자의 accessKeyId
+        const secretAccessKey = 'VF4ioUUCxNvMXv3r+Kz/Um5H0KJnjgvRfwu2JfwI'; // IAM에서 생성한 사용자의 secretAccessKey
 
+        // aws 접속 설정
+        AWS.config.update({
+            region,
+            accessKeyId,
+            secretAccessKey
+        });
+
+        // 서버 업로드 함수
+        const upload = new AWS.S3.ManagedUpload({
+            params: {
+                Bucket: albumBucketName,
+                Key: blob.name,
+                Body: blob,
+                ACL: "public-read"
+            }
+        });
+
+        // 업로드 실행
+        const promise = upload.promise();
+
+        promise.then(
+            function (data) {
+                // 성공 시 수행
+                // console.log("Successfully uploaded photo.");
+                callback("https://ourdepartmentis.s3.ap-northeast-2.amazonaws.com/" + blob.name);
+            },
+            function (err) {
+                // 실패 시 수행
+                return console.log("There was an error uploading your photo: ", err.message);
+            }
+        );
+    })
+
+    async function handlerEditor(e) {
         const editorBody = editor.getMarkdown();
         const input = document.getElementById('contents');
         input.value = editorBody;
     }
-
-
 </script>
 </html>
