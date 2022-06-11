@@ -20,6 +20,7 @@ const PostContainer = ({ postState }) => {
       .get("/api/postList")
       .then((response) => {
         setPostList(response.data);
+        console.log(response.data);
       })
       .catch((error) => {
         alert(error);

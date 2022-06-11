@@ -13,10 +13,10 @@ import ViewPost from "./pages/ViewPost";
 import TemporarySave from "./pages/TemporarySave";
 import Heart from "./pages/Heart";
 import Search from "./pages/Search";
+import MyInfo from "./pages/MyInfo";
 
 /* createContext */
 export const LoginInfoContext = React.createContext();
-export const PostListContext = React.createContext();
 
 function App() {
   // 로그인 정보 관리 객체
@@ -27,6 +27,7 @@ function App() {
     await axios
       .post("/api/loginInfo")
       .then((response) => {
+        // console.log(response.data);
         setLoginInfo(response.data);
       })
       .catch((error) => {
@@ -50,6 +51,7 @@ function App() {
             <Route path="/heart" element={<Heart />} />
             <Route path="/view_post/:id" element={<ViewPost />} />
             <Route path="/search" element={<Search />} />
+            <Route path="/my_info" element={<MyInfo />} />
           </Routes>
         </BrowserRouter>
       </div>

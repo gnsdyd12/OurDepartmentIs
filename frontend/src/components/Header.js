@@ -48,7 +48,10 @@ const Header = () => {
   const loginMenu = [
     {
       title: "내 정보",
-      onClick: () => console.log("내 정보 클릭"),
+      onClick: () => {
+        navigate("/my_info");
+        handleCloseUserMenu();
+      },
     },
     {
       title: "글쓰기",
@@ -122,7 +125,7 @@ const Header = () => {
                       style={{
                         width: "45px",
                         height: "45px",
-                        borderRadius: "22.5px",
+                        borderRadius: 22.5,
                       }}
                     />
                     <KeyboardArrowDownIcon

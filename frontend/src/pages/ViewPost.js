@@ -122,6 +122,9 @@ const ViewPost = () => {
     views: 0,
     heartCount: 0,
     createTime: "",
+    uid: {
+      id: 0,
+    },
   });
 
   // 좋아요 상태 관리 객체
@@ -245,7 +248,7 @@ const ViewPost = () => {
         {completeGetPost && <Viewer initialValue={post.contents} />}
 
         {/* 수정, 삭제 버튼 Stack */}
-        {loginInfo && loginInfo.name === post.writer && (
+        {loginInfo && loginInfo.id === post.uid.id && (
           <Stack spacing={2} direction="row" sx={{ mt: 6 }}>
             {/* 수정 버튼 */}
             <button

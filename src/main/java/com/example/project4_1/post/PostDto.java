@@ -1,5 +1,6 @@
 package com.example.project4_1.post;
 
+import com.example.project4_1.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +18,7 @@ public class PostDto {
         private String title;
         private String contents;
         private String writer;
+        private User uid;
 
     }
 
@@ -51,8 +53,10 @@ public class PostDto {
         private String writer;
         private Long heartCount;
         private LocalDateTime createTime;
+        private User uid;
 
     }
+
 
     @Getter
     @Setter
@@ -66,6 +70,7 @@ public class PostDto {
         private Long views = 0L;
         private LocalDateTime createTime;
         private Long heartCount = 0L;
+        private User uid;
 
         public PostDetailDto(Post post) {
             this.id = post.getId();
@@ -74,7 +79,8 @@ public class PostDto {
             this.writer = post.getWriter();
             this.views = post.getViews();
             this.heartCount = post.getHeartCount();
-            this.createTime=post.getCreateTime();
+            this.createTime = post.getCreateTime();
+            this.uid = post.getUid();
         }
 
     }

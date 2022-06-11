@@ -66,6 +66,7 @@ const Search = () => {
         )}
       </Box>
 
+      {/* 게시물 Container */}
       <Container
         maxWidth="xl"
         sx={{
