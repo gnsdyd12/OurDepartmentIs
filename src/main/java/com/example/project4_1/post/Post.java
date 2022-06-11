@@ -1,6 +1,7 @@
 package com.example.project4_1.post;
 
 import com.example.project4_1.heart.Heart;
+import com.example.project4_1.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 import lombok.Getter;
@@ -41,10 +42,14 @@ public class Post {
     @NotNull
     private Long heartCount = 0L; // 좋아요 수
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User uid; // 사용자 아이디
+
     // 게시물 삭제 시 DB table에서 게시물에 등록된 좋아요 개체 삭제
     @JsonIgnore
     @OneToMany
-            (mappedBy="pid",cascade = CascadeType.ALL)
+            (mappedBy = "pid", cascade = CascadeType.ALL)
     List<Heart> hearts;
 
     public Post() {
@@ -58,6 +63,7 @@ public class Post {
         this.writer = postSaveDto.getWriter();
         this.views = 0L;
         this.heartCount = 0L;
+        this.uid = postSaveDto.getUid();
     }
 
     public void modify(PostDto.PostModifyDto postModifyDto) {

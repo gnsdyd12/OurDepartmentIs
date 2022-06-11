@@ -2,6 +2,8 @@ package com.example.project4_1.post;
 
 import com.example.project4_1.SessionUser;
 import com.example.project4_1.URL;
+import com.example.project4_1.user.User;
+import com.example.project4_1.user.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -17,12 +19,17 @@ public class postController {
 
     final PostService postService;
     private final HttpSession httpSession;
-
+    private final UserRepository userRepository;
     URL URL = new URL();
 
     // write 데이터 처리 (post mapping)
     @PostMapping("/postdata")
     public String savePost(PostDto.PostSaveDto postSaveDto) {
+        SessionUser sUser = (SessionUser) httpSession.getAttribute("user");
+        Long sUserId = sUser.getId();
+        User user = userRepository.findById(sUserId).get();
+        Long userId = user.getId();
+        postSaveDto.setUid(user);
         postService.save(new Post(postSaveDto));
         return "redirect:" + URL.getAPI_BASE_URL();
     }
