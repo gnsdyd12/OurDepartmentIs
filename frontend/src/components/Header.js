@@ -85,37 +85,33 @@ const Header = () => {
       <Container maxWidth="xl">
         <Toolbar disableGutters sx={{ justifyContent: "space-between", px: 3 }}>
           {/* 로고 */}
-          <Box sx={{ display: "flex" }}>
-            {/* 아이콘 */}
-            <CloudIcon sx={{ fontSize: 36, mx: "4px" }} />
-
-            {/* Text */}
-            <Typography
-              variant="h4"
-              noWrap
-              component="a"
-              href="/"
-              sx={{
-                display: "flex",
-                mx: "4px",
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              ODI
-            </Typography>
-          </Box>
+          <Typography
+            variant="h4"
+            noWrap
+            component="a"
+            href="/"
+            sx={{
+              display: "flex",
+              fontFamily: "monospace",
+              fontWeight: 700,
+              letterSpacing: ".3rem",
+              color: "inherit",
+              textDecoration: "none",
+            }}
+          >
+            <CloudIcon sx={{ fontSize: 36, mx: 1 }} />
+            ODI
+          </Typography>
 
           {/* 검색, 로그인 메뉴 버튼 Stack */}
           <Stack direction="row" spacing={4}>
+            {/* 검색 버튼 */}
             <Tooltip title="검색하기">
               <IconButton sx={{ p: 0 }} onClick={() => navigate("/search")}>
                 <SearchIcon sx={{ fontSize: 36 }} />
               </IconButton>
             </Tooltip>
+
             {/* 로그인 메뉴 버튼 */}
             {loginInfo ? (
               <Box sx={{ flexGrow: 0 }}>

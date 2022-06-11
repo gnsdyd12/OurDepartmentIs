@@ -29,6 +29,7 @@
     <button class="summit_btn" type="submit" formaction="/postdata">포스팅하기</button>
 </form>
 </body>
+
 <style>
     .title {
         padding-top: 30px;
@@ -107,9 +108,9 @@
 
 <script>
     const Editor = toastui.Editor;
-
     const title = document.querySelector("title");
     const writer = document.querySelector("writer");
+
     const editor = new Editor({
         el: document.querySelector('#editor'),
         height: '600px',
