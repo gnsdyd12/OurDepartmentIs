@@ -1,5 +1,6 @@
 package com.example.project4_1.mypage.temporaryPost;
 
+import com.example.project4_1.user.User;
 import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
@@ -27,6 +28,10 @@ public class TemporaryPost {
     @NotNull
     private String contents; // 본문
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User uid; // 사용자 아이디
+
     public TemporaryPost() {
 
     }
@@ -35,6 +40,7 @@ public class TemporaryPost {
         title = temporaryPostSaveDto.getTitle();
         writer = temporaryPostSaveDto.getWriter();
         contents = temporaryPostSaveDto.getContents();
+        uid = temporaryPostSaveDto.getUid();
     }
 
     public TemporaryPost(TemporaryPostDto.TemporaryPostModifyDto temporaryPostModifyDto) {
