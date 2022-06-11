@@ -1,27 +1,56 @@
 package com.example.project4_1.post;
 
+import com.example.project4_1.heart.Heart;
+import com.example.project4_1.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
+@Getter
+@Setter
 public class Post {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO) //id 자동증가
+    @GeneratedValue(strategy = GenerationType.AUTO) //id 자동 증가
     private Long id;
+
     @Column
-    private String writer; //작성자
+    private String writer; // 작성자
+
     @Column
     @NotNull
-    private String title; //제목
+    private String title; // 제목
+
     @Column(columnDefinition = "LONGTEXT")
     @NotNull
-    private String contents; //본문
+    private String contents; // 본문
+
     @Column
-    private LocalDateTime create_time = LocalDateTime.now(); //생성시간
+    private LocalDateTime createTime = LocalDateTime.now(); // 생성 시간
+
     @Column
+    @NotNull
     private Long views = 0L; //조회수
+
+    @Column
+    @NotNull
+    private Long heartCount = 0L; // 좋아요 수
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User uid; // 사용자 아이디
+
+    // 게시물 삭제 시 DB table에서 게시물에 등록된 좋아요 개체 삭제
+    @JsonIgnore
+    @OneToMany
+            (mappedBy = "pid", cascade = CascadeType.ALL)
+    List<Heart> hearts;
 
     public Post() {
 
@@ -33,7 +62,10 @@ public class Post {
         this.contents = postSaveDto.getContents();
         this.writer = postSaveDto.getWriter();
         this.views = 0L;
+        this.heartCount = 0L;
+        this.uid = postSaveDto.getUid();
     }
+
     public void modify(PostDto.PostModifyDto postModifyDto) {
         this.id = postModifyDto.getId();
         this.title = postModifyDto.getTitle();
@@ -41,51 +73,4 @@ public class Post {
         this.writer = postModifyDto.getWriter();
     }
 
-    public String getWriter() {
-        return writer;
-    }
-
-    public void setWriter(String writer) {
-        this.writer = writer;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContents() {
-        return contents;
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
-    }
-
-    public LocalDateTime getCreate_time() {
-        return create_time;
-    }
-
-    public void setCreate_time(LocalDateTime create_time) {
-        this.create_time = create_time;
-    }
-
-    public Long getViews() {
-        return views;
-    }
-
-    public void setViews(Long views) {
-        this.views = views;
-    }
 }

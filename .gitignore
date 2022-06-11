@@ -36,11 +36,9 @@ out/
 ### VS Code ###
 .vscode/
 
-
+### mac과 window 폴더 구조 차이를 위한 코드 추가 ###
 /src/main/resources/application.yml
-
-build.gradle
-
-settings.gradle
-
 /src/main/resources/application-oauth.properties
+build.gradle
+settings.gradle
+.jpb

@@ -11,7 +11,7 @@
 <header class="nav_bar">
     <h1>open blog for cs</h1>
     <nav>
-<!--        social login-->
+        <!-- social login -->
         <div th:if="${#authorization.expr('isAuthenticated()')}">
             <div th:text="${user.name}"></div>
             <img style="width:45px; height:45px" src="/image/unnamed.png" th:src="${user.picture}">
@@ -26,16 +26,16 @@
 
         <a href="write_post">글쓰기</a>
         <a href="mypage/mainpage">마이페이지</a>
-<!--        이전 폼 로그인-->
-<!--        <div th:if="${#authorization.expr('isAuthenticated()')}">-->
+        <!-- 이전 폼 로그인 -->
+        <!-- <div th:if="${#authorization.expr('isAuthenticated()')}"> -->
 
-<!--            <a href="/doLogout">로그아웃</a>-->
-<!--        </div>-->
-<!--        <div th:unless="${#authorization.expr('isAuthenticated()')}">-->
-<!--            <a href="member/login">로그인</a>-->
-<!--            <a href="member/newMember">회원가입</a>-->
-<!--        </div>-->
-<!--        <div th:text="${session.greeting}"></div>-->
+        <!-- <a href="/doLogout">로그아웃</a> -->
+        <!-- </div> -->
+        <!-- <div th:unless="${#authorization.expr('isAuthenticated()')}"> -->
+        <!-- <a href="member/login">로그인</a> -->
+        <!-- <a href="member/newMember">회원가입</a> -->
+        <!-- </div> -->
+        <!-- <div th:text="${session.greeting}"></div> -->
 
     </nav>
 </header>

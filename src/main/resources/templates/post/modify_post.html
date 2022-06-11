@@ -1,79 +1,219 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
-
-</head>
-<body>
-<h2>글 쓰기</h2>
-<script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js">
-</script>
-<div id="editor"></div>
-
-<form id="writeForm" th:action="@{'/modify_post/'+${post.id}}" method="post" th:object="${post}" onsubmit="handlerEditor()">
-    <div class="title">
+    <!-- <link rel="stylesheet" type="text/css" href="../style.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"
+    />
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.809.0.min.js"></script>
+    <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
+  </head>
+  <body>
+    <form
+      id="writeForm"
+      th:action="@{'/modify_post/'+${post.id}}"
+      method="post"
+      th:object="${post}"
+      onsubmit="handlerEditor()"
+    >
+      <div class="title">
         <label>
-            제목:
-            <input type="text" id="title" th:field="*{title}" name="title" required>
+          <input
+            placeholder="제목을 입력하세요"
+            type="text"
+            id="title"
+            th:field="*{title}"
+            name="title"
+            required
+          />
         </label>
-    </div>
-    <div class="writer">
+      </div>
+      <div id="editor"></div>
+      <div class="writer">
         <label>
-            <div 작성자 : th:text="${session.writer}"></div>
-            <input type="text" id="writer" name="writer" th:field="*{writer}" hidden>
+          <div 작성자 : th:text="${session.writer}"></div>
+          <input
+            type="text"
+            id="writer"
+            name="writer"
+            th:field="*{writer}"
+            hidden
+          />
         </label>
-    </div>
-    <div class="contents">
-        <textarea id="contents" name="contents" th:field="*{contents}" hidden></textarea>
-    </div>
-    <button class="summit_btn" type="submit">수정하기</button>
-</form>
-</body>
-<style>
-    .title>label>input{
-        width: 300px;
-        height: 30px;
-        margin: 10px;
+      </div>
+      <div class="contents">
+        <textarea
+          id="contents"
+          name="contents"
+          th:field="*{contents}"
+          hidden
+        ></textarea>
+      </div>
+      <div class="button_wrapper">
+        <button class="button_1" type="submit">수정하기</button>
+      </div>
+    </form>
+  </body>
+
+  <style>
+    .title {
+      padding-top: 30px;
+      padding-bottom: 30px;
     }
-    .contents>label>input{
-        height: 300px;
-        width: 50%;
-        margin: 10px;
+
+    .title > label {
+      font-size: 20pt;
+      font-weight: bold;
     }
-    .summit_btn{
-        position: relative;
-        left: 49%;
+
+    .title > label > input {
+      border: solid 3px #9091ee;
+      border-radius: 5px;
+      margin-left: 25%;
+      width: 48%;
+      height: 50px;
+      font-size: 30px;
     }
-</style>
-<script>
+
+    .title > label > input:focus {
+      outline: none;
+    }
+
+    .contents > label > input {
+      height: 300px;
+      width: 50%;
+      margin: 10px;
+    }
+
+    .contents > label > input::placeholder {
+      font-size: 30px;
+    }
+
+    .button_wrapper {
+      display: flex;
+      justify-content: center;
+    }
+
+    .button_1 {
+      width: 90px;
+      height: 40px;
+      margin-top: 20px;
+      margin-right: 10px;
+      margin-bottom: 20px;
+      margin-left: 10px;
+      background-color: #9091ee;
+      border: hidden;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.9s, color 0.2s;
+    }
+
+    .button_1:hover {
+      box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+    }
+
+    .button_2 {
+      width: 90px;
+      height: 40px;
+      margin-top: 20px;
+      margin-right: 10px;
+      margin-bottom: 20px;
+      margin-left: 10px;
+      background-color: white;
+      border: hidden;
+      color: #9091ee;
+      font-weight: bold;
+      font-size: 15px;
+      border-radius: 5px;
+      border: solid 2px;
+      cursor: pointer;
+      transition: all 0.9s, color 0.2s;
+    }
+
+    .button_2:hover {
+      box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+    }
+  </style>
+  <script>
     const Editor = toastui.Editor;
+    const title = document.querySelector("title");
+    const writer = document.querySelector("writer");
+
     const editor = new Editor({
-        el: document.querySelector('#editor'),
-        height: '600px',
-        initialEditType: 'markdown',
-        previewStyle: 'vertical'
+      el: document.querySelector("#editor"),
+      height: "600px",
+      initialEditType: "markdown",
+      previewStyle: "vertical",
     });
 
-    (function (){
+    // 이미지 업로드 시 aws 서버에 해당 파일을 업로드하고, 서버에 업로드 된 파일의 이미지 주소를 대신 불러오는 함수
+    editor.addHook("addImageBlobHook", function (blob, callback) {
+      const albumBucketName = "ourdepartmentis"; // S3의 버킷 이름
+      const region = "ap-northeast-2"; // 서울
+      const accessKeyId = "AKIAZEKJEVQEERS6QHNL"; // IAM에서 생성한 사용자의 accessKeyId
+      const secretAccessKey = "VF4ioUUCxNvMXv3r+Kz/Um5H0KJnjgvRfwu2JfwI"; // IAM에서 생성한 사용자의 secretAccessKey
 
-        // const title = document.querySelector("title");
-        // const writer = document.querySelector("writer");
-        const input =  document.getElementById('contents');
+      // aws 접속 설정
+      AWS.config.update({
+        region,
+        accessKeyId,
+        secretAccessKey,
+      });
 
-        editor.setMarkdown(input.value);
-    })()
+      // 서버 업로드 함수
+      const upload = new AWS.S3.ManagedUpload({
+        params: {
+          Bucket: albumBucketName,
+          Key: blob.name,
+          Body: blob,
+          ACL: "public-read",
+        },
+      });
+
+      // 업로드 실행
+      const promise = upload.promise();
+
+      promise.then(
+        function (data) {
+          // 성공 시 수행
+          // console.log("Successfully uploaded photo.");
+          callback(
+            "https://ourdepartmentis.s3.ap-northeast-2.amazonaws.com/" +
+              blob.name
+          );
+        },
+        function (err) {
+          // 실패 시 수행
+          return console.log(
+            "There was an error uploading your photo: ",
+            err.message
+          );
+        }
+      );
+    });
 
     async function handlerEditor(e) {
-
-        const editorBody = editor.getMarkdown();
-        const input =  document.getElementById('contents');
-        input.value = editorBody;
+      const editorBody = editor.getMarkdown();
+      const input = document.getElementById("contents");
+      input.value = editorBody;
     }
+  </script>
 
-
-</script>
+  <script>
+    // 임시 저장한 내용을 불러오는 함수
+    (function () {
+      const input = document.getElementById("contents");
+      editor.setMarkdown(input.value);
+    })();
+  </script>
 </html>
