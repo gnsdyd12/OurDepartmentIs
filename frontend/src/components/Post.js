@@ -51,31 +51,37 @@ const Post = ({ post, postState }) => {
         </CardContent>
 
         {/* 작성일 */}
-        <Typography
-          variant="body2"
-          color="text.secondary"
-          sx={{ px: 2, py: 0.5 }}
-        >
-          {getDate(post.createTime)}
-        </Typography>
+        {postState !== "Temporary" && (
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{ px: 2, py: 0.5 }}
+          >
+            {getDate(post.createTime)}
+          </Typography>
+        )}
 
         {/* 작성자, 좋아요 */}
-        <Divider variant="middle" />
-        <CardContent
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            mx: 1,
-          }}
-        >
-          <Typography fontSize="14px">
-            by <strong>{post.writer}</strong>
-          </Typography>
-          <Box sx={{ display: "flex" }} fontSize="14px">
-            <FavoriteBorderIcon fontSize="small" />
-            <Typography fontSize="14px">&nbsp;{post.heartCount}</Typography>
-          </Box>
-        </CardContent>
+        {postState !== "Temporary" && (
+          <>
+            <Divider variant="middle" />
+            <CardContent
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                mx: 1,
+              }}
+            >
+              <Typography fontSize="14px">
+                by <strong>{post.writer}</strong>
+              </Typography>
+              <Box sx={{ display: "flex" }} fontSize="14px">
+                <FavoriteBorderIcon fontSize="small" />
+                <Typography fontSize="14px">&nbsp;{post.heartCount}</Typography>
+              </Box>
+            </CardContent>
+          </>
+        )}
       </Card>
     </Grid>
   );

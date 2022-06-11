@@ -1,167 +1,210 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>Title</title>
-    <link rel="stylesheet" href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"/>
+    <!-- <link rel="stylesheet" type="text/css" href="../style.css" /> -->
+    <link
+      rel="stylesheet"
+      href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.48.4/codemirror.min.css"
+    />
     <script src="https://sdk.amazonaws.com/js/aws-sdk-2.809.0.min.js"></script>
     <script src="https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js"></script>
-</head>
-<body>
-<form id="writeForm" method="POST" onsubmit="handlerEditor()">
-    <div class="title">
+  </head>
+  <body>
+    <form id="writeForm" method="POST" onsubmit="handlerEditor()">
+      <div class="title">
         <label>
-            <input placeholder="제목을 입력하세요" type="text" id="title" name="title" required>
+          <input
+            placeholder="제목을 입력하세요"
+            type="text"
+            id="title"
+            name="title"
+            required
+          />
         </label>
-    </div>
-    <div id="editor"></div>
-    <script th:src="@{https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js}"></script>
-    <div class="writer">
-        <label>
-            <input type="text" id="writer" name="writer" th:value="${user.name}" hidden>
-        </label>
-    </div>
-    <div class="contents">
-        <textarea id="contents" name="contents" hidden></textarea>
-    </div>
-    <button class="temp_summit_btn" type="submit" formaction="/temporaryPost">임시저장</button>
-    <button class="summit_btn" type="submit" formaction="/postdata">포스팅하기</button>
-</form>
-</body>
+      </div>
+      <div id="editor"></div>
+      <script
+        th:src="@{https://uicdn.toast.com/editor/latest/toastui-editor-all.min.js}"
+      ></script>
 
-<style>
+      <div class="writer">
+        <label>
+          <input
+            type="text"
+            id="writer"
+            name="writer"
+            th:value="${user.name}"
+            hidden
+          />
+        </label>
+      </div>
+      <div class="contents">
+        <textarea id="contents" name="contents" hidden></textarea>
+      </div>
+      <div class="button_wrapper">
+        <button class="button_1" type="submit" formaction="/temporaryPost">
+          임시저장
+        </button>
+        <button class="button_2" type="submit" formaction="/postdata">
+          포스팅하기
+        </button>
+      </div>
+    </form>
+  </body>
+
+  <!-- <script src="../Editor.js"></script> -->
+
+  <style>
     .title {
-        padding-top: 30px;
-        padding-bottom: 30px;
+      padding-top: 30px;
+      padding-bottom: 30px;
     }
 
     .title > label {
-        font-size: 20pt;
-        font-weight: bold;
+      font-size: 20pt;
+      font-weight: bold;
     }
 
     .title > label > input {
-        border: solid 3px #9091ee;
-        border-radius: 5px;
-        margin-left: 25%;
-        width: 48%;
-        height: 50px;
-        font-size: 30px;
+      border: solid 3px #9091ee;
+      border-radius: 5px;
+      margin-left: 25%;
+      width: 48%;
+      height: 50px;
+      font-size: 30px;
     }
 
     .title > label > input:focus {
-        outline: none;
+      outline: none;
     }
 
     .contents > label > input {
-        height: 300px;
-        width: 50%;
-        margin: 10px;
+      height: 300px;
+      width: 50%;
+      margin: 10px;
     }
 
     .contents > label > input::placeholder {
-        font-size: 30px;
+      font-size: 30px;
     }
 
-    .summit_btn {
-        position: relative;
-        left: 44%;
-        width: 90px;
-        height: 40px;
-        margin-top: 20px;
-        background-color: #9091ee;
-        border: hidden;
-        color: white;
-        font-weight: bold;
-        font-size: 15px;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: all 0.9s, color 0.2s;
+    .button_wrapper {
+      display: flex;
+      justify-content: center;
     }
 
-    .summit_btn:hover {
-        box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+    .button_1 {
+      width: 90px;
+      height: 40px;
+      margin-top: 20px;
+      margin-right: 10px;
+      margin-bottom: 20px;
+      margin-left: 10px;
+      background-color: #9091ee;
+      border: hidden;
+      color: white;
+      font-weight: bold;
+      font-size: 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: all 0.9s, color 0.2s;
     }
 
-    .temp_summit_btn {
-        position: relative;
-        left: 44%;
-        width: 90px;
-        height: 40px;
-        margin-top: 20px;
-        background-color: white;
-        border: hidden;
-        color: #9091ee;
-        font-weight: bold;
-        font-size: 15px;
-        border-radius: 5px;
-        border: solid 2px;
-        cursor: pointer;
-        transition: all 0.9s, color 0.2s;
+    .button_1:hover {
+      box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
     }
 
-    .temp_summit_btn:hover {
-        box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+    .button_2 {
+      width: 90px;
+      height: 40px;
+      margin-top: 20px;
+      margin-right: 10px;
+      margin-bottom: 20px;
+      margin-left: 10px;
+      background-color: white;
+      border: hidden;
+      color: #9091ee;
+      font-weight: bold;
+      font-size: 15px;
+      border-radius: 5px;
+      border: solid 2px;
+      cursor: pointer;
+      transition: all 0.9s, color 0.2s;
     }
-</style>
 
-<script>
+    .button_2:hover {
+      box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+    }
+  </style>
+
+  <script>
     const Editor = toastui.Editor;
     const title = document.querySelector("title");
     const writer = document.querySelector("writer");
 
     const editor = new Editor({
-        el: document.querySelector('#editor'),
-        height: '600px',
-        initialEditType: 'markdown',
-        previewStyle: 'vertical'
+      el: document.querySelector("#editor"),
+      height: "600px",
+      initialEditType: "markdown",
+      previewStyle: "vertical",
     });
 
     // 이미지 업로드 시 aws 서버에 해당 파일을 업로드하고, 서버에 업로드 된 파일의 이미지 주소를 대신 불러오는 함수
     editor.addHook("addImageBlobHook", function (blob, callback) {
-        const albumBucketName = 'ourdepartmentis'; // S3의 버킷 이름
-        const region = 'ap-northeast-2'; // 서울
-        const accessKeyId = 'AKIAZEKJEVQEERS6QHNL'; // IAM에서 생성한 사용자의 accessKeyId
-        const secretAccessKey = 'VF4ioUUCxNvMXv3r+Kz/Um5H0KJnjgvRfwu2JfwI'; // IAM에서 생성한 사용자의 secretAccessKey
+      const albumBucketName = "ourdepartmentis"; // S3의 버킷 이름
+      const region = "ap-northeast-2"; // 서울
+      const accessKeyId = "AKIAZEKJEVQEERS6QHNL"; // IAM에서 생성한 사용자의 accessKeyId
+      const secretAccessKey = "VF4ioUUCxNvMXv3r+Kz/Um5H0KJnjgvRfwu2JfwI"; // IAM에서 생성한 사용자의 secretAccessKey
 
-        // aws 접속 설정
-        AWS.config.update({
-            region,
-            accessKeyId,
-            secretAccessKey
-        });
+      // aws 접속 설정
+      AWS.config.update({
+        region,
+        accessKeyId,
+        secretAccessKey,
+      });
 
-        // 서버 업로드 함수
-        const upload = new AWS.S3.ManagedUpload({
-            params: {
-                Bucket: albumBucketName,
-                Key: blob.name,
-                Body: blob,
-                ACL: "public-read"
-            }
-        });
+      // 서버 업로드 함수
+      const upload = new AWS.S3.ManagedUpload({
+        params: {
+          Bucket: albumBucketName,
+          Key: blob.name,
+          Body: blob,
+          ACL: "public-read",
+        },
+      });
 
-        // 업로드 실행
-        const promise = upload.promise();
+      // 업로드 실행
+      const promise = upload.promise();
 
-        promise.then(
-            function (data) {
-                // 성공 시 수행
-                // console.log("Successfully uploaded photo.");
-                callback("https://ourdepartmentis.s3.ap-northeast-2.amazonaws.com/" + blob.name);
-            },
-            function (err) {
-                // 실패 시 수행
-                return console.log("There was an error uploading your photo: ", err.message);
-            }
-        );
-    })
+      promise.then(
+        function (data) {
+          // 성공 시 수행
+          // console.log("Successfully uploaded photo.");
+          callback(
+            "https://ourdepartmentis.s3.ap-northeast-2.amazonaws.com/" +
+              blob.name
+          );
+        },
+        function (err) {
+          // 실패 시 수행
+          return console.log(
+            "There was an error uploading your photo: ",
+            err.message
+          );
+        }
+      );
+    });
 
     async function handlerEditor(e) {
-        const editorBody = editor.getMarkdown();
-        const input = document.getElementById('contents');
-        input.value = editorBody;
+      const editorBody = editor.getMarkdown();
+      const input = document.getElementById("contents");
+      input.value = editorBody;
     }
-</script>
+  </script>
 </html>
