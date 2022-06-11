@@ -37,7 +37,7 @@ public class TemporaryPostDto {
         public TemporaryPostModifyDto(TemporaryPost temporaryPost) {
             this.id = temporaryPost.getId();
             this.title = temporaryPost.getTitle();
-            this.contents = temporaryPost.getTitle();
+            this.contents = temporaryPost.getContents();
             this.writer = temporaryPost.getWriter();
         }
     }
