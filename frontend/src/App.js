@@ -27,7 +27,7 @@ function App() {
     await axios
       .post("/api/loginInfo")
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setLoginInfo(response.data);
       })
       .catch((error) => {
