@@ -43,7 +43,7 @@ public class TemporaryPostController {
         ModelAndView modelAndview = new ModelAndView();
         TemporaryPostDto.TemporaryPostModifyDto tempPost = temporaryPostService.modifyById(id);
         modelAndview.addObject("tempPost", tempPost);
-        modelAndview.setViewName("/mypage/continue_write");
+        modelAndview.setViewName("mypage/continue_write");
         return modelAndview;
     }
 
