@@ -25,9 +25,9 @@ function App() {
   // 로그인 정보 데이터 요청 함수
   const getLoginInfo = async () => {
     await axios
-      .post("/api/loginInfo")
+      .post(process.env.REACT_APP_DB_HOST + "/api/loginInfo")
       .then((response) => {
-        // console.log(response.data);
+        console.log(response.data);
         setLoginInfo(response.data);
       })
       .catch((error) => {

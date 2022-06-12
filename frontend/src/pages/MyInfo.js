@@ -33,7 +33,7 @@ const MyInfo = () => {
   // 전체 데이터 요청 함수
   const getAllPostList = async () => {
     await axios
-      .get("/api/postList")
+      .get(process.env.REACT_APP_DB_HOST + "/api/postList")
       .then((response) => {
         setPostList(response.data);
       })
