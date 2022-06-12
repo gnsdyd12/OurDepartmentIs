@@ -9,6 +9,7 @@ import { LoginInfoContext } from "../App";
 
 /* axios */
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 /* toast-ui-viewer */
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
@@ -20,7 +21,6 @@ import {
   Typography,
   Box,
   Stack,
-  Button,
   IconButton,
   useMediaQuery,
   Divider,
@@ -142,7 +142,7 @@ const ViewPost = () => {
       .post(process.env.REACT_APP_DB_HOST + `/api/view_post/${id}`)
       .then((response) => {
         setPost(response.data);
-        console.log(response.data);
+        // console.log(response.data);
         setHeartCount(response.data.heartCount);
         setCompleteGetPost(true);
       })

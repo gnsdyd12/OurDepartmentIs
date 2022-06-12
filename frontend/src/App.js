@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 /* axios */
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 /* components */
 import Header from "./components/Header";
@@ -27,7 +28,7 @@ function App() {
     await axios
       .post(process.env.REACT_APP_DB_HOST + "/api/loginInfo")
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data);
         setLoginInfo(response.data);
       })
       .catch((error) => {
@@ -58,5 +59,7 @@ function App() {
     </LoginInfoContext.Provider>
   );
 }
+
+axios.defaults.withCredentials = true;
 
 export default App;

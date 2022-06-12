@@ -39,7 +39,8 @@ public class User {
     List<Heart> hearts;
 
     @Builder
-    public User(String name, String email, String picture, Role role) {
+    public User(Long id, String name, String email, String picture, Role role) {
+        this.Id=id;
         this.name = name;
         this.email = email;
         this.picture = picture;
