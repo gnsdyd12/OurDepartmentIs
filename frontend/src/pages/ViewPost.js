@@ -139,7 +139,7 @@ const ViewPost = () => {
   // 게시물 데이터 요청 함수
   const getPost = async () => {
     axios
-      .post(`/api/view_post/${id}`)
+      .post(process.env.REACT_APP_DB_HOST + `/api/view_post/${id}`)
       .then((response) => {
         setPost(response.data);
         console.log(response.data);
@@ -154,7 +154,7 @@ const ViewPost = () => {
   // 좋아요 여부 데이터(boolean) 요청 함수
   const getIsHeart = async () => {
     axios
-      .post("/api/is_heart", {
+      .post(process.env.REACT_APP_DB_HOST + "/api/is_heart", {
         pid: id,
         uid: loginInfo.id,
       })
@@ -169,7 +169,7 @@ const ViewPost = () => {
   // 좋아요 버튼이 눌렸을 때, backend로 postId와 userId 데이터를 전달하여 좋아요 상태값(boolean)을 반환받는 함수
   const heartBtnClickEvent = () => {
     axios
-      .post("/api/heart_click", {
+      .post(process.env.REACT_APP_DB_HOST + "/api/heart_click", {
         pid: id,
         uid: loginInfo.id,
       })

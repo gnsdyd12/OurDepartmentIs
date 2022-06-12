@@ -30,7 +30,7 @@ const PostContainer = ({ postState }) => {
   // 임시 저장 게시물 데이터 요청 함수
   const getTemporaryPostList = async () => {
     await axios
-      .get("/api/temporaryPostList")
+      .get(process.env.REACT_APP_DB_HOST + "/api/temporaryPostList")
       .then((response) => {
         setPostList(response.data);
       })
@@ -42,7 +42,7 @@ const PostContainer = ({ postState }) => {
   // 좋아요 게시물 데이터 요청 함수
   const getHeartPostList = async () => {
     await axios
-      .get("/api/heartPostList")
+      .get(process.env.REACT_APP_DB_HOST + "/api/heartPostList")
       .then((response) => {
         setPostList(response.data);
       })
@@ -53,6 +53,7 @@ const PostContainer = ({ postState }) => {
 
   // Mount
   useEffect(() => {
+    console.log(process.env.REACT_APP_DB_HOST);
     postState === "All"
       ? getAllPostList()
       : postState === "Temporary"
