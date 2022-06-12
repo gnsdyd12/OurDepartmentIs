@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 
 /* axios */
 import axios from "axios";
-axios.defaults.withCredentials = true;
 
 /* mui/material */
 import Container from "@mui/material/Container";
@@ -79,5 +78,7 @@ const PostContainer = ({ postState }) => {
 PostContainer.defaultProps = {
   postState: "All",
 };
+
+axios.defaults.withCredentials = true;
 
 export default PostContainer;
