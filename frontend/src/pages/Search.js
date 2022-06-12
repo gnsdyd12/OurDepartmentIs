@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 
 /* axios */
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 /* mui/material */
 import {

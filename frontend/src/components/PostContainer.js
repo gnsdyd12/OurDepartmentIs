@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 
 /* axios */
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 /* mui/material */
 import Container from "@mui/material/Container";
@@ -20,7 +21,7 @@ const PostContainer = ({ postState }) => {
       .get(process.env.REACT_APP_DB_HOST + "/api/postList")
       .then((response) => {
         setPostList(response.data);
-        console.log(response.data);
+        // console.log(response.data);
       })
       .catch((error) => {
         alert(error);

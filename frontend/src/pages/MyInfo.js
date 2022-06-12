@@ -5,19 +5,17 @@ import { LoginInfoContext } from "../App";
 
 /* axios */
 import axios from "axios";
+axios.defaults.withCredentials = true;
 
 /* mui/material */
 import {
   Container,
-  FormControl,
-  TextField,
   Grid,
   Box,
   Typography,
   Card,
   CardMedia,
   CardContent,
-  Divider,
 } from "@mui/material";
 
 /* components */
