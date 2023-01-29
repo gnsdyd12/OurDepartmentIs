@@ -1,7 +1,10 @@
 # project4_1
-![image](https://user-images.githubusercontent.com/65015650/215313918-107baef0-e6b8-42e4-aa8a-2132efd4c180.png)
 
-## 개요
+
+[OurDepartmentIs_포트폴리오.pdf](https://github.com/gnsdyd12/OurDepartmentIs/files/10529336/OurDepartmentIs_.pdf)
+
+
+
 학생들이 과제나 학습에 유용한 정보를 자유롭게 올릴 수 있는 학습 블로그
 
 ## 목차
