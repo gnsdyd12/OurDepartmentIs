@@ -19,12 +19,12 @@
   - front-end : react.js
   - back-end : spring-boot
  - 기능
-   - MAIN UI 구현
    - 로그인
-   - 글쓰기(toast ui editor API 사용) - https://nhn.github.io/tui.editor/latest/
-   - 야간모드
-   - 게시글 추천기능
+   - 게시글 조회/작성/삭제/수정 (toast ui editor API 사용) - https://nhn.github.io/tui.editor/latest/
+   - 좋아요
+   - 마이페이지(회원 정보 출력, 내가 작성한 게시물 조회, '좋아요' 한 게시물 조회, 임시저장 게시물 조회
    - 학업(학년 별 포스팅 기능) / 생활(전 학년 공통) 탭 구분
+   - 야간모드
 
 ### 2. 배포
 AWS-EC2를 이용한 배포
@@ -51,7 +51,7 @@ AWS-EC2를 이용한 배포
 
 > 릴리즈 브랜치 : release
 >
-> > dev ->release -> main
+> > dev -> release -> main
 
 > 핫픽스 브랜치 : hotfix
 >
