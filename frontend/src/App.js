@@ -60,6 +60,4 @@ function App() {
   );
 }
 
-axios.defaults.withCredentials = true;
-
 export default App;
