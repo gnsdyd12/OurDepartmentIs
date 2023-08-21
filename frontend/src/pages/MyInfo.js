@@ -5,7 +5,6 @@ import { LoginInfoContext } from "../App";
 
 /* axios */
 import axios from "axios";
-axios.defaults.withCredentials = true;
 
 /* mui/material */
 import {
@@ -121,5 +120,7 @@ const MyInfo = () => {
     </Container>
   );
 };
+
+axios.defaults.withCredentials = true;
 
 export default MyInfo;

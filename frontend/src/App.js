@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 
 /* axios */
 import axios from "axios";
-axios.defaults.withCredentials = true;
 
 /* components */
 import Header from "./components/Header";
