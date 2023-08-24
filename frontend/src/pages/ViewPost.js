@@ -9,7 +9,6 @@ import { LoginInfoContext } from "../App";
 
 /* axios */
 import axios from "axios";
-axios.defaults.withCredentials = true;
 
 /* toast-ui-viewer */
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
@@ -275,5 +274,7 @@ const ViewPost = () => {
     </Container>
   );
 };
+
+axios.defaults.withCredentials = true;
 
 export default ViewPost;
