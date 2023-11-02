@@ -37,7 +37,7 @@ const Post = ({ post, postState }) => {
             ? () =>
                 (window.location.href =
                   API_BASE_URL + `/continueWrite/${post.id}`)
-            : () => navigate(`/view_post/${post.id}`)
+            : () => navigate(`/detail/${post.id}`)
         }
       >
         {/* 제목 */}

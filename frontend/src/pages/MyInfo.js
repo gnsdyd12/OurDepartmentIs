@@ -1,11 +1,8 @@
 import React, { useState, useEffect, useContext } from "react";
-
 /* useContext */
 import { LoginInfoContext } from "../App";
-
 /* axios */
 import axios from "axios";
-
 /* mui/material */
 import {
   Container,
@@ -16,10 +13,10 @@ import {
   CardMedia,
   CardContent,
 } from "@mui/material";
-
 /* components */
 import Post from "../components/Post";
 
+// 내 정보 페이지 (내가 쓴 게시물 리스트 출력 페이지)
 const MyInfo = () => {
   // 로그인 정보
   const loginInfo = useContext(LoginInfoContext);

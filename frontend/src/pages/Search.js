@@ -1,21 +1,12 @@
 import React, { useState, useEffect } from "react";
-
 /* axios */
 import axios from "axios";
-
 /* mui/material */
-import {
-  Container,
-  FormControl,
-  TextField,
-  Grid,
-  Box,
-  Typography,
-} from "@mui/material";
-
+import { Container, TextField, Grid, Box, Typography } from "@mui/material";
 /* components */
 import Post from "../components/Post";
 
+// 검색한 게시물 리스트 출력 페이지
 const Search = () => {
   // 검색 content mapping 할 state
   const [searchContent, setSearchContent] = useState("");

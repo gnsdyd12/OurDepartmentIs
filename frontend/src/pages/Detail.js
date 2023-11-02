@@ -1,19 +1,14 @@
 import React, { useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
-
 /* CSS */
-import styles from "../App.module.css";
-
+import styles from "../Detail.module.css";
 /* useContext */
 import { LoginInfoContext } from "../App";
-
 /* axios */
 import axios from "axios";
-
 /* toast-ui-viewer */
 import "@toast-ui/editor/dist/toastui-editor-viewer.css";
 import { Viewer } from "@toast-ui/react-editor";
-
 /* mui/material */
 import {
   Container,
@@ -24,56 +19,45 @@ import {
   useMediaQuery,
   Divider,
 } from "@mui/material";
-
 /* mui/icons-material */
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
-/* mui/system */
-import { createTheme } from "@mui/system";
-
 /* utils */
 import { API_BASE_URL } from "../utils/URL";
 import { getFullDate } from "../utils/date";
 
-const theme = createTheme({
-  breakpoints: {
-    values: {
-      mobile: 0,
-      tablet: 640,
-      laptop: 1024,
-      desktop: 1200,
-    },
-  },
-});
+// 쿠키 허용 (https://inpa.tistory.com/entry/AXIOS-📚-CORS-쿠키-전송withCredentials-옵션)
+axios.defaults.withCredentials = true;
 
-const ViewPost = () => {
+// 게시물 자세히 보기 페이지
+const Detail = () => {
   // mediaQuery: 해상도에 따른 좋아요 버튼 출력 위치 지정
-  const heartBtnPosition = useMediaQuery("(min-width: 1200px)");
+  const PC_SIZE = useMediaQuery("(min-width: 1024px)");
+  const Mobile_SIZE = useMediaQuery("(max-width: 767px)");
 
-  // heartBtnPosition 일 때 좋아요 버튼
+  // PC_SIZE 일 때 렌더링 되는 좋아요 버튼
   const LeftHeartBtn = () => {
     return (
       <Box
         sx={{
-          position: "fixed",
+          position: "sticky",
+          height: "0", // height 지정을 해주지 않으면 끝까지 늘어남
           top: "20%",
           border: "1px solid",
           borderRadius: 8,
           py: "14px",
           px: "4px",
-          ml: "0px",
         }}
       >
         <IconButton
-          sx={{ border: "solid 1px" }}
+          sx={{ border: "solid 1px", mb: "8px" }}
           onClick={() => heartBtnClickEvent()}
           disabled={loginInfo ? false : true}
         >
-          {isHeart === false ? (
-            <FavoriteBorderIcon sx={{ fontSize: "2rem" }} />
-          ) : (
+          {isHeart ? (
             <FavoriteIcon sx={{ fontSize: "2rem" }} />
+          ) : (
+            <FavoriteBorderIcon sx={{ fontSize: "2rem" }} />
           )}
         </IconButton>
         <Typography textAlign="center">{heartCount}</Typography>
@@ -81,7 +65,7 @@ const ViewPost = () => {
     );
   };
 
-  // heartBtnPosition 아닐 때 좋아요 버튼
+  // PC_SIZE 아닐 때 렌더링 되는 좋아요 버튼
   const RightHeartBtn = () => {
     return (
       <IconButton
@@ -94,10 +78,10 @@ const ViewPost = () => {
           py: "0px",
         }}
       >
-        {isHeart === false ? (
-          <FavoriteBorderIcon sx={{ fontSize: "small" }} />
-        ) : (
+        {isHeart ? (
           <FavoriteIcon sx={{ fontSize: "small" }} />
+        ) : (
+          <FavoriteBorderIcon sx={{ fontSize: "small" }} />
         )}
         <Typography variant="caption" textAlign="center">
           &nbsp;&nbsp;{heartCount}
@@ -112,7 +96,7 @@ const ViewPost = () => {
   // 게시물 id를 url로부터 저장
   const { id } = useParams();
 
-  // 게시물 데이터 관리 객체
+  // 게시물 정보
   const [post, setPost] = useState({
     id: 0,
     title: "",
@@ -126,13 +110,13 @@ const ViewPost = () => {
     },
   });
 
-  // 좋아요 상태 관리 객체
+  // 좋아요 여부
   const [isHeart, setIsHeart] = useState(false);
 
-  // 좋아요 개수 관리 객체
+  // 좋아요 총 개수
   const [heartCount, setHeartCount] = useState(0);
 
-  // API 수신을 완료했는지 판단하는 객체. 이 객체가 true로 바뀌면 화면에 출력
+  // API 통신 완료 여부. true 일 때 화면에 출력
   const [completeGetPost, setCompleteGetPost] = useState(false);
 
   // 게시물 데이터 요청 함수
@@ -141,7 +125,6 @@ const ViewPost = () => {
       .post(process.env.REACT_APP_DB_HOST + `/api/view_post/${id}`)
       .then((response) => {
         setPost(response.data);
-        // console.log(response.data);
         setHeartCount(response.data.heartCount);
         setCompleteGetPost(true);
       })
@@ -174,13 +157,12 @@ const ViewPost = () => {
       })
       .then(function (response) {
         setIsHeart(response.data);
-        {
-          response.data === true
-            ? setHeartCount(heartCount + 1)
-            : setHeartCount(heartCount - 1);
-        }
+
+        response.data
+          ? setHeartCount(heartCount + 1)
+          : setHeartCount(heartCount - 1);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
       });
   };
@@ -192,9 +174,11 @@ const ViewPost = () => {
   }, []);
 
   return (
-    <Container sx={{ display: "flex", maxWidth: "lg" }}>
+    <Container
+      sx={{ display: "flex", width: Mobile_SIZE ? "100%" : "80%", my: 5 }}
+    >
       {/* 좋아요 버튼 */}
-      {heartBtnPosition && <LeftHeartBtn />}
+      {PC_SIZE && <LeftHeartBtn />}
 
       {/* 게시물 */}
       <Container
@@ -203,11 +187,10 @@ const ViewPost = () => {
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
-          my: 4,
         }}
       >
         {/* 제목 */}
-        <Typography variant="h2" sx={{ my: 2 }}>
+        <Typography variant="h2" sx={{ mb: 2 }}>
           {post.title}
         </Typography>
 
@@ -239,7 +222,7 @@ const ViewPost = () => {
           </Stack>
 
           {/* 좋아요 버튼 */}
-          {!heartBtnPosition && <RightHeartBtn />}
+          {!PC_SIZE && <RightHeartBtn />}
         </Box>
         <Divider sx={{ mb: 2 }} />
 
@@ -248,7 +231,12 @@ const ViewPost = () => {
 
         {/* 수정, 삭제 버튼 Stack */}
         {loginInfo && loginInfo.id === post.uid.id && (
-          <Stack spacing={2} direction="row" sx={{ mt: 6 }}>
+          <Stack
+            spacing={2}
+            direction="row"
+            justifyContent="flex-end"
+            sx={{ mt: 6 }}
+          >
             {/* 수정 버튼 */}
             <button
               className={styles.modifyBtn}
@@ -275,6 +263,4 @@ const ViewPost = () => {
   );
 };
 
-axios.defaults.withCredentials = true;
-
-export default ViewPost;
+export default Detail;
