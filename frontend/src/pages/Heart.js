@@ -6,7 +6,7 @@ import PostContainer from "../components/PostContainer";
 const Heart = () => {
   return (
     <>
-      <PostContainer postState="Heart" />
+      <PostContainer postState="heart" />
     </>
   );
 };

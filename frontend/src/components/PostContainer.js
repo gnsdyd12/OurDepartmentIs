@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from "react";
-
 /* axios */
 import axios from "axios";
-
 /* mui/material */
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
-
 /* components */
 import Post from "./Post";
 
@@ -15,12 +12,11 @@ const PostContainer = ({ postState }) => {
   const [postList, setPostList] = useState([]);
 
   // 전체 게시물 데이터 요청 함수
-  const getAllPostList = async () => {
+  const getPostList = async () => {
     await axios
       .get(process.env.REACT_APP_DB_HOST + "/api/postList")
       .then((response) => {
         setPostList(response.data);
-        // console.log(response.data);
       })
       .catch((error) => {
         alert(error);
@@ -53,13 +49,13 @@ const PostContainer = ({ postState }) => {
 
   // Mount
   useEffect(() => {
-    console.log(process.env.REACT_APP_DB_HOST);
-    postState === "All"
-      ? getAllPostList()
-      : postState === "Temporary"
+    // !! 가독성 좋게 코드 변경 필요 (switch문으로?)
+    postState === "all"
+      ? getPostList()
+      : postState === "temporary"
       ? getTemporaryPostList()
       : getHeartPostList();
-  }, []);
+  }, []); // 발생하는 경고문 useCallback으로 해결 필요
 
   return (
     <Container
@@ -76,7 +72,7 @@ const PostContainer = ({ postState }) => {
 };
 
 PostContainer.defaultProps = {
-  postState: "All",
+  postState: "all",
 };
 
 axios.defaults.withCredentials = true;

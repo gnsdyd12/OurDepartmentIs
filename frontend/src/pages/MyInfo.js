@@ -21,7 +21,7 @@ const MyInfo = () => {
   // 로그인 정보
   const loginInfo = useContext(LoginInfoContext);
 
-  // 게시물 리스트 관리 객체
+  // 게시물 리스트 데이터
   const [postList, setPostList] = useState([]);
 
   // 전체 데이터 요청 함수
@@ -58,7 +58,7 @@ const MyInfo = () => {
         sx={{
           display: "flex",
           width: "50%",
-          m: 8,
+          my: 8,
           boxShadow: 0,
           borderRadius: 0,
           borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
@@ -100,6 +100,7 @@ const MyInfo = () => {
       </Card>
 
       {/* 게시물 Container */}
+      {/* !! PostContainer Component 사용 요망 */}
       <Container
         maxWidth="xl"
         sx={{

@@ -8,14 +8,14 @@ import Post from "../components/Post";
 
 // 검색한 게시물 리스트 출력 페이지
 const Search = () => {
-  // 검색 content mapping 할 state
+  // 검색 내용
   const [searchContent, setSearchContent] = useState("");
 
-  // 게시물 리스트 관리 객체
+  // 게시물 리스트 데이터
   const [postList, setPostList] = useState([]);
 
   // 전체 게시물 데이터 요청 함수
-  const getAllPostList = async () => {
+  const getPostList = async () => {
     await axios
       .get(process.env.REACT_APP_DB_HOST + "/api/postList")
       .then((response) => {
@@ -35,7 +35,7 @@ const Search = () => {
 
   // Mount
   useEffect(() => {
-    getAllPostList();
+    getPostList();
   }, []);
 
   return (
@@ -58,6 +58,7 @@ const Search = () => {
       </Box>
 
       {/* 게시물 Container */}
+      {/* !! PostContainer Component 사용 요망 */}
       <Container
         maxWidth="xl"
         sx={{

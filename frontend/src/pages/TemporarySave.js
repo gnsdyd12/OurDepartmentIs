@@ -6,7 +6,7 @@ import PostContainer from "../components/PostContainer";
 const TemporarySave = () => {
   return (
     <>
-      <PostContainer postState="Temporary" />
+      <PostContainer postState="temporary" />
     </>
   );
 };

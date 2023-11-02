@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 /* useContext */
 import { LoginInfoContext } from "../App";
-
 /* mui/material */
 import {
   AppBar,
@@ -18,14 +16,12 @@ import {
   MenuItem,
   Stack,
 } from "@mui/material";
-
 /* mui/icons-material */
 import LoginIcon from "@mui/icons-material/Login";
 import LogoutIcon from "@mui/icons-material/Logout";
 import SearchIcon from "@mui/icons-material/Search";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import CloudIcon from "@mui/icons-material/Cloud";
-
 /* utils */
 import { API_BASE_URL } from "../utils/URL";
 import { basicColor } from "../utils/color";

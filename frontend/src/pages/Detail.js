@@ -171,7 +171,7 @@ const Detail = () => {
   useEffect(() => {
     getPost();
     loginInfo && getIsHeart();
-  }, []);
+  }, []); // 발생하는 경고문 useCallback으로 해결 필요
 
   return (
     <Container

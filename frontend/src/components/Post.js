@@ -1,20 +1,15 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-
 /* mui/material */
 import Grid from "@mui/material/Grid";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
-// import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
-// import CardActions from "@mui/material/CardActions";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import Divider from "@mui/material/Divider";
-
 /* mui/icons-material */
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
-
 /* utils */
 import { API_BASE_URL } from "../utils/URL";
 import { getDate } from "../utils/date";
@@ -33,7 +28,7 @@ const Post = ({ post, postState }) => {
       <Card
         sx={{ width: 345, height: 345, cursor: "pointer", boxShadow: "3" }}
         onClick={
-          postState === "Temporary"
+          postState === "temporary"
             ? () =>
                 (window.location.href =
                   API_BASE_URL + `/continueWrite/${post.id}`)
@@ -51,7 +46,7 @@ const Post = ({ post, postState }) => {
         </CardContent>
 
         {/* 작성일 */}
-        {postState !== "Temporary" && (
+        {postState !== "temporary" && (
           <Typography
             variant="body2"
             color="text.secondary"
@@ -62,7 +57,7 @@ const Post = ({ post, postState }) => {
         )}
 
         {/* 작성자, 좋아요 */}
-        {postState !== "Temporary" && (
+        {postState !== "temporary" && (
           <>
             <Divider variant="middle" />
             <CardContent
