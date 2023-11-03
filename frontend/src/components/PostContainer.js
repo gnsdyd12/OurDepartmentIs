@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 /* axios */
 import axios from "axios";
 /* mui/material */
@@ -7,56 +7,7 @@ import Grid from "@mui/material/Grid";
 /* components */
 import Post from "./Post";
 
-const PostContainer = ({ postState }) => {
-  // 게시물 리스트 관리 객체
-  const [postList, setPostList] = useState([]);
-
-  // 전체 게시물 데이터 요청 함수
-  const getPostList = async () => {
-    await axios
-      .get(process.env.REACT_APP_DB_HOST + "/api/postList")
-      .then((response) => {
-        setPostList(response.data);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-
-  // 임시 저장 게시물 데이터 요청 함수
-  const getTemporaryPostList = async () => {
-    await axios
-      .get(process.env.REACT_APP_DB_HOST + "/api/temporaryPostList")
-      .then((response) => {
-        setPostList(response.data);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-
-  // 좋아요 게시물 데이터 요청 함수
-  const getHeartPostList = async () => {
-    await axios
-      .get(process.env.REACT_APP_DB_HOST + "/api/heartPostList")
-      .then((response) => {
-        setPostList(response.data);
-      })
-      .catch((error) => {
-        alert(error);
-      });
-  };
-
-  // Mount
-  useEffect(() => {
-    // !! 가독성 좋게 코드 변경 필요 (switch문으로?)
-    postState === "all"
-      ? getPostList()
-      : postState === "temporary"
-      ? getTemporaryPostList()
-      : getHeartPostList();
-  }, []); // 발생하는 경고문 useCallback으로 해결 필요
-
+const PostContainer = ({ postList, postState }) => {
   return (
     <Container
       maxWidth="xl"
@@ -71,10 +22,9 @@ const PostContainer = ({ postState }) => {
   );
 };
 
+// postState는 write(임시저장 글 이어쓰기)와 read(작성 완료된 글 읽기) 두 가지 상태로 있음
 PostContainer.defaultProps = {
-  postState: "all",
+  postState: "read",
 };
-
-axios.defaults.withCredentials = true;
 
 export default PostContainer;

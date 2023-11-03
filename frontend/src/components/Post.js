@@ -17,18 +17,14 @@ import { getDate } from "../utils/date";
 const Post = ({ post, postState }) => {
   const navigate = useNavigate();
 
-  // 미리보기 내용을 반환하는 함수. 내용이 일정 길이보다 길어지면 잘라서 반환
-  const getPreview = (text, length) => {
-    return text.length < length ? text : text.slice(0, length) + "...";
-  };
-
   return (
     <Grid item key={post} xs={12} sm={12} md={6} lg={4} xl={3}>
       {/* 게시물 - 미리보기 */}
       <Card
-        sx={{ width: 345, height: 345, cursor: "pointer", boxShadow: "3" }}
+        sx={{ height: "100%", cursor: "pointer", boxShadow: "3" }}
         onClick={
-          postState === "temporary"
+          // 임시 저장 게시물이면 이어 쓰기 페이지로 이동, 아니면 Detail 페이지로 이동
+          postState === "write"
             ? () =>
                 (window.location.href =
                   API_BASE_URL + `/continueWrite/${post.id}`)
@@ -36,17 +32,35 @@ const Post = ({ post, postState }) => {
         }
       >
         {/* 제목 */}
-        <CardHeader title={getPreview(post.title, 15)} />
+        <CardHeader
+          sx={{
+            ".MuiCardHeader-content": {
+              overflow: "hidden",
+            },
+          }}
+          title={post.title}
+          titleTypographyProps={{ noWrap: true }}
+        />
 
         {/* 본문 */}
         <CardContent sx={{ height: "165px" }}>
-          <Typography variant="body2" color="text.secondary">
-            {getPreview(post.contents, 150)}
+          <Typography
+            variant="body2"
+            color="text.secondary"
+            sx={{
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              display: "-webkit-box",
+              WebkitLineClamp: "6",
+              WebkitBoxOrient: "vertical",
+            }}
+          >
+            {post.contents}
           </Typography>
         </CardContent>
 
         {/* 작성일 */}
-        {postState !== "temporary" && (
+        {postState === "read" && (
           <Typography
             variant="body2"
             color="text.secondary"
@@ -56,8 +70,8 @@ const Post = ({ post, postState }) => {
           </Typography>
         )}
 
-        {/* 작성자, 좋아요 */}
-        {postState !== "temporary" && (
+        {/* 작성자, 좋아요 개수 */}
+        {postState === "read" && (
           <>
             <Divider variant="middle" />
             <CardContent

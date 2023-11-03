@@ -2,9 +2,12 @@ import React, { useState, useEffect } from "react";
 /* axios */
 import axios from "axios";
 /* mui/material */
-import { Container, TextField, Grid, Box, Typography } from "@mui/material";
+import { Container, TextField, Box, Typography } from "@mui/material";
 /* components */
-import Post from "../components/Post";
+import PostContainer from "../components/PostContainer";
+
+// axios - 쿠키 허용 전역 설정
+axios.defaults.withCredentials = true;
 
 // 검색한 게시물 리스트 출력 페이지
 const Search = () => {
@@ -44,7 +47,7 @@ const Search = () => {
       sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}
     >
       {/* 검색 창 */}
-      <Box sx={{ width: 800, m: 5 }}>
+      <Box sx={{ width: "50%", minWidth: "300px", maxWidth: "700px", m: 5 }}>
         <TextField
           id="demo-helper-text-misaligned-no-helper"
           label="Search"
@@ -58,24 +61,9 @@ const Search = () => {
       </Box>
 
       {/* 게시물 Container */}
-      {/* !! PostContainer Component 사용 요망 */}
-      <Container
-        maxWidth="xl"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Grid container spacing={4} sx={{ width: "100%" }}>
-          {searchContent !== "" &&
-            filtered.map((post) => <Post key={post.id} post={post} />)}
-        </Grid>
-      </Container>
+      {searchContent && <PostContainer postList={filtered} />}
     </Container>
   );
 };
-
-axios.defaults.withCredentials = true;
 
 export default Search;

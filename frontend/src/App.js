@@ -12,7 +12,7 @@ import Heart from "./pages/Heart";
 import Search from "./pages/Search";
 import MyInfo from "./pages/MyInfo";
 
-// 쿠키 허용 (https://inpa.tistory.com/entry/AXIOS-📚-CORS-쿠키-전송withCredentials-옵션)
+// axios - 쿠키 허용 전역 설정 (https://inpa.tistory.com/entry/AXIOS-📚-CORS-쿠키-전송withCredentials-옵션)
 axios.defaults.withCredentials = true;
 
 // 로그인 정보 - createContext

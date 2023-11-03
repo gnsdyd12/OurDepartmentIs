@@ -6,7 +6,6 @@ import axios from "axios";
 /* mui/material */
 import {
   Container,
-  Grid,
   Box,
   Typography,
   Card,
@@ -14,7 +13,10 @@ import {
   CardContent,
 } from "@mui/material";
 /* components */
-import Post from "../components/Post";
+import PostContainer from "../components/PostContainer";
+
+// axios - 쿠키 허용 전역 설정
+axios.defaults.withCredentials = true;
 
 // 내 정보 페이지 (내가 쓴 게시물 리스트 출력 페이지)
 const MyInfo = () => {
@@ -25,7 +27,7 @@ const MyInfo = () => {
   const [postList, setPostList] = useState([]);
 
   // 전체 데이터 요청 함수
-  const getAllPostList = async () => {
+  const getPostList = async () => {
     await axios
       .get(process.env.REACT_APP_DB_HOST + "/api/postList")
       .then((response) => {
@@ -41,7 +43,7 @@ const MyInfo = () => {
 
   // Mount
   useEffect(() => {
-    getAllPostList();
+    getPostList();
   }, []);
 
   return (
@@ -100,25 +102,9 @@ const MyInfo = () => {
       </Card>
 
       {/* 게시물 Container */}
-      {/* !! PostContainer Component 사용 요망 */}
-      <Container
-        maxWidth="xl"
-        sx={{
-          display: "flex",
-          justifyContent: "center",
-          flexDirection: "column",
-        }}
-      >
-        <Grid container spacing={4} sx={{ width: "100%" }}>
-          {filtered.map((post) => (
-            <Post key={post.id} post={post} />
-          ))}
-        </Grid>
-      </Container>
+      <PostContainer postList={filtered} />
     </Container>
   );
 };
-
-axios.defaults.withCredentials = true;
 
 export default MyInfo;

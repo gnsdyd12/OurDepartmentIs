@@ -26,7 +26,7 @@ import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { API_BASE_URL } from "../utils/URL";
 import { getFullDate } from "../utils/date";
 
-// 쿠키 허용 (https://inpa.tistory.com/entry/AXIOS-📚-CORS-쿠키-전송withCredentials-옵션)
+// axios - 쿠키 허용 전역 설정
 axios.defaults.withCredentials = true;
 
 // 게시물 자세히 보기 페이지
@@ -35,7 +35,7 @@ const Detail = () => {
   const PC_SIZE = useMediaQuery("(min-width: 1024px)");
   const Mobile_SIZE = useMediaQuery("(max-width: 767px)");
 
-  // PC_SIZE 일 때 렌더링 되는 좋아요 버튼
+  // PC_SIZE 일 때 렌더링 되는 좋아요 버튼 Component
   const LeftHeartBtn = () => {
     return (
       <Box
@@ -65,7 +65,7 @@ const Detail = () => {
     );
   };
 
-  // PC_SIZE 아닐 때 렌더링 되는 좋아요 버튼
+  // PC_SIZE 아닐 때 렌더링 되는 좋아요 버튼 Component
   const RightHeartBtn = () => {
     return (
       <IconButton
