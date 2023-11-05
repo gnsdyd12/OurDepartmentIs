@@ -1,6 +1,4 @@
 import React from "react";
-/* axios */
-import axios from "axios";
 /* mui/material */
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";

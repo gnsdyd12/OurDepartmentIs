@@ -11,7 +11,9 @@ import {
   Card,
   CardMedia,
   CardContent,
+  Tab,
 } from "@mui/material";
+import { TabContext, TabList, TabPanel } from "@mui/lab";
 /* components */
 import PostContainer from "../components/PostContainer";
 
@@ -24,22 +26,40 @@ const MyInfo = () => {
   const loginInfo = useContext(LoginInfoContext);
 
   // 게시물 리스트 데이터
-  const [postList, setPostList] = useState([]);
+  const [postList, setPostList] = useState({ my: [], heart: [], temp: [] });
 
   // 전체 데이터 요청 함수
   const getPostList = async () => {
     await axios
-      .get(process.env.REACT_APP_DB_HOST + "/api/postList")
-      .then((response) => {
-        setPostList(response.data);
-      })
+      .all([
+        axios.get(process.env.REACT_APP_DB_HOST + "/api/postList"),
+        axios.get(process.env.REACT_APP_DB_HOST + "/api/heartPostList"),
+        axios.get(process.env.REACT_APP_DB_HOST + "/api/temporaryPostList"),
+      ])
+      .then(
+        axios.spread((res1, res2, res3) => {
+          setPostList({
+            // 모든 게시물 중에 자신이 작성한 게시물만 반환
+            my: res1.data
+              .reverse()
+              .filter((post) => post.uid.id === loginInfo.id),
+            heart: res2.data.reverse(),
+            temp: res3.data.reverse(),
+          });
+        })
+      )
       .catch((error) => {
         alert(error);
       });
   };
 
-  // 모든 게시물 중에 자신이 작성한 게시물만 반환하는 함수
-  const filtered = postList.filter((post) => post.uid.id === loginInfo.id);
+  // tabs value
+  const [value, setValue] = useState("my");
+
+  // tab 변경 이벤트 함수
+  const handleTabChange = (event, newValue) => {
+    setValue(newValue);
+  };
 
   // Mount
   useEffect(() => {
@@ -60,6 +80,7 @@ const MyInfo = () => {
         sx={{
           display: "flex",
           width: "50%",
+          minWidth: "380px",
           my: 8,
           boxShadow: 0,
           borderRadius: 0,
@@ -101,8 +122,41 @@ const MyInfo = () => {
         </Box>
       </Card>
 
-      {/* 게시물 Container */}
-      <PostContainer postList={filtered} />
+      <TabContext value={value}>
+        <Box sx={{ width: "100%", px: 5 }}>
+          <TabList
+            onChange={handleTabChange}
+            aria-label="lab API tabs example"
+            sx={{ width: "100%" }}
+            // textColor="secondary"
+            // indicatorColor="secondary"
+          >
+            <Tab label="내 포스트" value="my" />
+            <Tab label="좋아한 포스트" value="heart" />
+            <Tab label="임시 포스트" value="temp" />
+          </TabList>
+        </Box>
+        {/* {tabs.map((iter, index) => {
+          return (
+            <TabPanel
+              key={iter}
+              value={iter}
+              sx={{ width: "100%", padding: 0 }}
+            >
+              {iter}
+            </TabPanel>
+          );
+        })} */}
+        <TabPanel value="my" sx={{ width: "100%", padding: 0 }}>
+          <PostContainer postList={postList.my} />
+        </TabPanel>
+        <TabPanel value="heart" sx={{ width: "100%", padding: 0 }}>
+          <PostContainer postList={postList.heart} />
+        </TabPanel>
+        <TabPanel value="temp" sx={{ width: "100%", padding: 0 }}>
+          <PostContainer postList={postList.temp} postState="write" />
+        </TabPanel>
+      </TabContext>
     </Container>
   );
 };

@@ -22,7 +22,7 @@ const Search = () => {
     await axios
       .get(process.env.REACT_APP_DB_HOST + "/api/postList")
       .then((response) => {
-        setPostList(response.data);
+        setPostList(response.data.reverse());
       })
       .catch((error) => {
         alert(error);

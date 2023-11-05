@@ -78,7 +78,7 @@ const Post = ({ post, postState }) => {
               sx={{
                 display: "flex",
                 justifyContent: "space-between",
-                mx: 1,
+                "&:last-child": { pb: 2 },
               }}
             >
               <Typography fontSize="14px">
