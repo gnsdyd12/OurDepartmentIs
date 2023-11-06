@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
+/* css */
+import "./App.css";
 /* axios */
 import axios from "axios";
 /* components */
@@ -7,10 +9,8 @@ import Header from "./components/Header";
 /* pages */
 import Home from "./pages/Home";
 import Detail from "./pages/Detail";
-import TemporarySave from "./pages/TemporarySave";
-import Heart from "./pages/Heart";
 import Search from "./pages/Search";
-import MyInfo from "./pages/MyInfo";
+import MyPage from "./pages/MyPage";
 
 // axios - 쿠키 허용 전역 설정 (https://inpa.tistory.com/entry/AXIOS-📚-CORS-쿠키-전송withCredentials-옵션)
 axios.defaults.withCredentials = true;
@@ -46,11 +46,9 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/temporary_save" element={<TemporarySave />} />
-            <Route path="/heart" element={<Heart />} />
             <Route path="/detail/:id" element={<Detail />} />
             <Route path="/search" element={<Search />} />
-            <Route path="/my_info" element={<MyInfo />} />
+            <Route path="/my_page" element={<MyPage />} />
           </Routes>
         </BrowserRouter>
       </div>

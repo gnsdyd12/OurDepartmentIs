@@ -1,8 +1,12 @@
+:root {
+  --signature-color: #9091ee;
+}
+
 .modifyBtn {
   position: relative;
   width: 90px;
   height: 40px;
-  background-color: #9091ee;
+  background-color: var(--signature-color);
   border: hidden;
   color: white;
   font-weight: bold;
@@ -22,7 +26,7 @@
   height: 40px;
   background-color: white;
   border: hidden;
-  color: #9091ee;
+  color: var(--signature-color);
   font-weight: bold;
   font-size: 15px;
   border-radius: 5px;

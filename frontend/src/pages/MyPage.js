@@ -16,12 +16,14 @@ import {
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 /* components */
 import PostContainer from "../components/PostContainer";
+/* utils */
+import { signatureColor } from "../utils/color";
 
 // axios - 쿠키 허용 전역 설정
 axios.defaults.withCredentials = true;
 
 // 내 정보 페이지 (내가 쓴 게시물 리스트 출력 페이지)
-const MyInfo = () => {
+const MyPage = () => {
   // 로그인 정보
   const loginInfo = useContext(LoginInfoContext);
 
@@ -39,10 +41,7 @@ const MyInfo = () => {
       .then(
         axios.spread((res1, res2, res3) => {
           setPostList({
-            // 모든 게시물 중에 자신이 작성한 게시물만 반환
-            my: res1.data
-              .reverse()
-              .filter((post) => post.uid.id === loginInfo.id),
+            my: res1.data.reverse(),
             heart: res2.data.reverse(),
             temp: res3.data.reverse(),
           });
@@ -53,13 +52,34 @@ const MyInfo = () => {
       });
   };
 
-  // tabs value
+  // tab value
   const [value, setValue] = useState("my");
 
   // tab 변경 이벤트 함수
   const handleTabChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  // tab 메뉴
+  const tabs = [
+    {
+      value: "my",
+      postList: postList.my.filter(
+        (post) => loginInfo && post.uid.id === loginInfo.id
+      ),
+      postState: "read",
+    },
+    {
+      value: "heart",
+      postList: postList.heart,
+      postState: "read",
+    },
+    {
+      value: "temp",
+      postList: postList.temp,
+      postState: "write",
+    },
+  ];
 
   // Mount
   useEffect(() => {
@@ -90,7 +110,7 @@ const MyInfo = () => {
         {/* 프로필 사진 */}
         <CardMedia
           component="img"
-          image={loginInfo.picture}
+          image={loginInfo && loginInfo.picture}
           sx={{ m: 2, width: 150, borderRadius: 20 }}
           alt="profile image"
         />
@@ -107,7 +127,7 @@ const MyInfo = () => {
           >
             {/* 이름 */}
             <Typography variant="h5" sx={{ my: 1 }}>
-              {loginInfo.name}
+              {loginInfo && loginInfo.name}
             </Typography>
 
             {/* 이메일 */}
@@ -116,7 +136,7 @@ const MyInfo = () => {
               color="text.secondary"
               sx={{ my: 1 }}
             >
-              {loginInfo.email}
+              {loginInfo && loginInfo.email}
             </Typography>
           </CardContent>
         </Box>
@@ -127,38 +147,34 @@ const MyInfo = () => {
           <TabList
             onChange={handleTabChange}
             aria-label="lab API tabs example"
-            sx={{ width: "100%" }}
-            // textColor="secondary"
-            // indicatorColor="secondary"
+            sx={{
+              width: "100%",
+              "& button.Mui-selected": { color: signatureColor },
+            }}
+            TabIndicatorProps={{ sx: { backgroundColor: signatureColor } }}
           >
             <Tab label="내 포스트" value="my" />
             <Tab label="좋아한 포스트" value="heart" />
             <Tab label="임시 포스트" value="temp" />
           </TabList>
         </Box>
-        {/* {tabs.map((iter, index) => {
+        {tabs.map((menu) => {
           return (
             <TabPanel
-              key={iter}
-              value={iter}
+              key={menu.value}
+              value={menu.value}
               sx={{ width: "100%", padding: 0 }}
             >
-              {iter}
+              <PostContainer
+                postList={menu.postList}
+                postState={menu.postState}
+              />
             </TabPanel>
           );
-        })} */}
-        <TabPanel value="my" sx={{ width: "100%", padding: 0 }}>
-          <PostContainer postList={postList.my} />
-        </TabPanel>
-        <TabPanel value="heart" sx={{ width: "100%", padding: 0 }}>
-          <PostContainer postList={postList.heart} />
-        </TabPanel>
-        <TabPanel value="temp" sx={{ width: "100%", padding: 0 }}>
-          <PostContainer postList={postList.temp} postState="write" />
-        </TabPanel>
+        })}
       </TabContext>
     </Container>
   );
 };
 
-export default MyInfo;
+export default MyPage;

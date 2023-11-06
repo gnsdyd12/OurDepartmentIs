@@ -1,1 +1,1 @@
-export const basicColor = "#9091ee";
+export const signatureColor = "#9091ee";

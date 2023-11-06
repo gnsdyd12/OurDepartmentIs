@@ -43,7 +43,7 @@ const Post = ({ post, postState }) => {
         />
 
         {/* 본문 */}
-        <CardContent sx={{ height: "165px" }}>
+        <CardContent sx={{ height: "150px" }}>
           <Typography
             variant="body2"
             color="text.secondary"
@@ -61,11 +61,7 @@ const Post = ({ post, postState }) => {
 
         {/* 작성일 */}
         {postState === "read" && (
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ px: 2, py: 0.5 }}
-          >
+          <Typography variant="body2" color="text.secondary" sx={{ p: 2 }}>
             {getDate(post.createTime)}
           </Typography>
         )}

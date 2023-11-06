@@ -55,7 +55,7 @@ public class TemporaryPostController {
         User user = userRepository.findById(sUserId).get();
         temporaryPostSaveDto.setUid(user);
         temporaryPostService.temporaryPostSave(new TemporaryPost(temporaryPostSaveDto));
-        return "redirect:" + URL.getAPI_BASE_URL() + "/temporary_save";
+        return "redirect:" + URL.getAPI_BASE_URL() + "/my_page";
     }
 
     @PostMapping("postComplete/{id}")
