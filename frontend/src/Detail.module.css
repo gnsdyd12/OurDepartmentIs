@@ -4,37 +4,33 @@
 
 .modifyBtn {
   position: relative;
-  width: 90px;
+  width: 100px;
   height: 40px;
   background-color: var(--signature-color);
-  border: hidden;
   color: white;
+  border: hidden;
+  border-radius: 5px;
   font-weight: bold;
   font-size: 15px;
-  border-radius: 5px;
   cursor: pointer;
   transition: all 0.9s, color 0.2s;
-}
-
-.modifyBtn:hover {
-  box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
 }
 
 .deleteBtn {
   position: relative;
-  width: 90px;
+  width: 100px;
   height: 40px;
   background-color: white;
-  border: hidden;
   color: var(--signature-color);
+  border: solid 2px;
+  border-radius: 5px;
   font-weight: bold;
   font-size: 15px;
-  border-radius: 5px;
-  border: solid 2px;
   cursor: pointer;
   transition: all 0.9s, color 0.2s;
 }
 
+.modifyBtn:hover,
 .deleteBtn:hover {
-  box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+  box-shadow: 100px 0 0 0 rgba(0, 0, 0, 0.2) inset;
 }

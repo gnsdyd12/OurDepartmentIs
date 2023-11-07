@@ -1,3 +1,7 @@
+:root {
+  --signature-color: #9091ee;
+}
+
 .title {
   padding-top: 30px;
   padding-bottom: 30px;
@@ -9,7 +13,7 @@
 }
 
 .title > label > input {
-  border: solid 3px #9091ee;
+  border: solid 3px var(--signature-color);
   border-radius: 5px;
   margin-left: 25%;
   width: 48%;
@@ -37,44 +41,39 @@
 }
 
 .button_1 {
-  width: 90px;
+  width: 100px;
   height: 40px;
   margin-top: 20px;
   margin-right: 10px;
   margin-bottom: 20px;
   margin-left: 10px;
-  background-color: #9091ee;
-  border: hidden;
+  background-color: var(--signature-color);
   color: white;
+  border: hidden;
+  border-radius: 5px;
   font-weight: bold;
   font-size: 15px;
-  border-radius: 5px;
   cursor: pointer;
   transition: all 0.9s, color 0.2s;
 }
 
-.button_1:hover {
-  box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
-}
-
 .button_2 {
-  width: 90px;
+  width: 100px;
   height: 40px;
   margin-top: 20px;
   margin-right: 10px;
   margin-bottom: 20px;
   margin-left: 10px;
   background-color: white;
-  border: hidden;
-  color: #9091ee;
+  color: var(--signature-color);
+  border: solid 2px;
+  border-radius: 5px;
   font-weight: bold;
   font-size: 15px;
-  border-radius: 5px;
-  border: solid 2px;
   cursor: pointer;
   transition: all 0.9s, color 0.2s;
 }
 
-.button_2:hover {
-  box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+.button_1:hover .button_2:hover {
+  box-shadow: 100px 0 0 0 rgba(0, 0, 0, 0.2) inset;
 }

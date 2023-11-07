@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <title>Continue write</title>
-    <!-- <link rel="stylesheet" href="../style.css" /> -->
+    <!-- <link rel="stylesheet" href="../style.css" /> 경로 오류로 적용 안 됌 -->
     <link
       rel="stylesheet"
       href="https://uicdn.toast.com/editor/latest/toastui-editor.min.css"
@@ -112,46 +112,41 @@
     }
 
     .button_1 {
-      width: 90px;
+      width: 100px;
       height: 40px;
       margin-top: 20px;
       margin-right: 10px;
       margin-bottom: 20px;
       margin-left: 10px;
       background-color: #9091ee;
-      border: hidden;
       color: white;
+      border: hidden;
+      border-radius: 5px;
       font-weight: bold;
       font-size: 15px;
-      border-radius: 5px;
       cursor: pointer;
       transition: all 0.9s, color 0.2s;
     }
 
-    .button_1:hover {
-      box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
-    }
-
     .button_2 {
-      width: 90px;
+      width: 100px;
       height: 40px;
       margin-top: 20px;
       margin-right: 10px;
       margin-bottom: 20px;
       margin-left: 10px;
       background-color: white;
-      border: hidden;
       color: #9091ee;
+      border: solid 2px;
+      border-radius: 5px;
       font-weight: bold;
       font-size: 15px;
-      border-radius: 5px;
-      border: solid 2px;
       cursor: pointer;
       transition: all 0.9s, color 0.2s;
     }
 
-    .button_2:hover {
-      box-shadow: 90px 0 0 0 rgba(0, 0, 0, 0.2) inset;
+    .button_1:hover .button_2:hover {
+      box-shadow: 100px 0 0 0 rgba(0, 0, 0, 0.2) inset;
     }
   </style>
 
