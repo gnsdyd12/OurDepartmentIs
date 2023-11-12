@@ -31,12 +31,20 @@ axios.defaults.withCredentials = true;
 
 // 게시물 자세히 보기 페이지
 const Detail = () => {
+  useEffect(() => {
+    console.log("Detail 렌더");
+  });
+
   // mediaQuery: 해상도에 따른 좋아요 버튼 출력 위치 지정
   const PC_SIZE = useMediaQuery("(min-width: 1024px)");
   const Mobile_SIZE = useMediaQuery("(max-width: 767px)");
 
   // PC_SIZE 일 때 렌더링 되는 좋아요 버튼 Component
-  const LeftHeartBtn = () => {
+  const LeftHeartBtn = React.memo(() => {
+    useEffect(() => {
+      console.log("LeftHeartBtn 렌더");
+    });
+
     return (
       <Box
         sx={{
@@ -63,10 +71,14 @@ const Detail = () => {
         <Typography textAlign="center">{heartCount}</Typography>
       </Box>
     );
-  };
+  });
 
   // PC_SIZE 아닐 때 렌더링 되는 좋아요 버튼 Component
-  const RightHeartBtn = () => {
+  const RightHeartBtn = React.memo(() => {
+    useEffect(() => {
+      console.log("RightHeartBtn 렌더");
+    });
+
     return (
       <IconButton
         onClick={() => heartBtnClickEvent()}
@@ -88,7 +100,7 @@ const Detail = () => {
         </Typography>
       </IconButton>
     );
-  };
+  });
 
   // 로그인 정보
   const loginInfo = useContext(LoginInfoContext);
@@ -263,4 +275,4 @@ const Detail = () => {
   );
 };
 
-export default Detail;
+export default React.memo(Detail);

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 /* mui/material */
 import Grid from "@mui/material/Grid";
@@ -15,6 +15,10 @@ import { API_BASE_URL } from "../utils/URL";
 import { getDate } from "../utils/date";
 
 const Post = ({ post, postState }) => {
+  useEffect(() => {
+    console.log("Post 렌더");
+  });
+
   const navigate = useNavigate();
 
   return (
@@ -92,4 +96,4 @@ const Post = ({ post, postState }) => {
   );
 };
 
-export default Post;
+export default React.memo(Post);

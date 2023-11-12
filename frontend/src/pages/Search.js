@@ -11,6 +11,10 @@ axios.defaults.withCredentials = true;
 
 // 검색한 게시물 리스트 출력 페이지
 const Search = () => {
+  useEffect(() => {
+    console.log("Search 렌더");
+  });
+
   // 검색 내용
   const [searchContent, setSearchContent] = useState("");
 
@@ -66,4 +70,4 @@ const Search = () => {
   );
 };
 
-export default Search;
+export default React.memo(Search);

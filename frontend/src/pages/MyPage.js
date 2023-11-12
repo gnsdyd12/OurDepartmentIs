@@ -24,6 +24,10 @@ axios.defaults.withCredentials = true;
 
 // 내 정보 페이지 (내가 쓴 게시물 리스트 출력 페이지)
 const MyPage = () => {
+  useEffect(() => {
+    console.log("MyPage 렌더");
+  });
+
   // 로그인 정보
   const loginInfo = useContext(LoginInfoContext);
 
@@ -177,4 +181,4 @@ const MyPage = () => {
   );
 };
 
-export default MyPage;
+export default React.memo(MyPage);

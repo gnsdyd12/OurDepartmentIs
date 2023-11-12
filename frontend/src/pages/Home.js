@@ -8,6 +8,10 @@ import PostContainer from "../components/PostContainer";
 axios.defaults.withCredentials = true;
 
 const Home = () => {
+  useEffect(() => {
+    console.log("Home 렌더");
+  });
+
   // 게시물 리스트 관리 객체
   const [postList, setPostList] = useState([]);
 
@@ -31,4 +35,4 @@ const Home = () => {
   return <PostContainer postList={postList} />;
 };
 
-export default Home;
+export default React.memo(Home);

@@ -19,6 +19,10 @@ axios.defaults.withCredentials = true;
 export const LoginInfoContext = React.createContext();
 
 function App() {
+  useEffect(() => {
+    console.log("App 렌더");
+  });
+
   // 로그인 정보
   const [loginInfo, setLoginInfo] = useState(null);
 

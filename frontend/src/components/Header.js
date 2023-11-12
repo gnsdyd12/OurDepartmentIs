@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 /* useContext */
 import { LoginInfoContext } from "../App";
@@ -26,6 +26,10 @@ import { API_BASE_URL } from "../utils/URL";
 import { signatureColor } from "../utils/color";
 
 const Header = () => {
+  useEffect(() => {
+    console.log("Header 렌더");
+  });
+
   const navigate = useNavigate();
 
   /* 사용자 메뉴 */
@@ -160,4 +164,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default React.memo(Header);

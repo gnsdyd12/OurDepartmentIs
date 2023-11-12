@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 /* mui/material */
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
@@ -6,6 +6,10 @@ import Grid from "@mui/material/Grid";
 import Post from "./Post";
 
 const PostContainer = ({ postList, postState }) => {
+  useEffect(() => {
+    console.log("PostContainer 렌더");
+  });
+
   return (
     <Container
       maxWidth="xl"
@@ -25,4 +29,4 @@ PostContainer.defaultProps = {
   postState: "read",
 };
 
-export default PostContainer;
+export default React.memo(PostContainer);
